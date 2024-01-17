@@ -59,7 +59,7 @@ export default {
     },
     data() {
         return {
-            next_url: '/pokemon',
+            next_url: '',
         }
     },
     methods: {
@@ -67,8 +67,7 @@ export default {
         loadPokemons() {
             
             document.getElementById('loader').style.display = 'flex';
-            if(this.$store.state.pokemons_carregados.length == 0){
-                Api.callApi().get(this.next_url).then(response => {
+                Api.callApi().get(this.next_url != '' ? this.next_url : '/pokemon').then(response => {
                     this.next_url = response.data.next;
                     for (let item of response.data.results) {
                         Api.callApi().get(`/pokemon/${item.name}`).then(res => {
@@ -81,10 +80,10 @@ export default {
                     
                 })
                 
-            }
+            
             setTimeout(function(){
                 document.getElementById('loader').style.display = 'none';
-            },300)
+            },200)
 
         }
     },
@@ -100,8 +99,9 @@ export default {
 
     },
     beforeMount() {
-     
-        this.loadPokemons()
+        if(this.$store.state.pokemons_carregados.length == 0){
+            this.loadPokemons()
+        }
     }
 }
 </script>
