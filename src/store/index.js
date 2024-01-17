@@ -20,6 +20,10 @@ export default createStore({
         },
         clearPokemons(state){
             state.pokemons_carregados = [];
+        },
+
+        setPokemon(state,data){
+            state.pokemon_selecionado = data;
         }
        
     }

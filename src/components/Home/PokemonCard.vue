@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <router-link :to="`pokemon/${pokemon.id}`">
+    <div @click="goToPokemonDetails($event)">
+        
 
             <img :src="pokemon.sprites.other.home.front_default" alt="">
             <div class="">
@@ -14,8 +14,8 @@
                     </div>
                 </div>
             </div>
-        </router-link>
-    </div>
+</div>
+
 </template>
 
 <script>
@@ -24,6 +24,12 @@ export default {
     created() {
         console.log(this.pokemon)
     },
+    methods:{
+        goToPokemonDetails(){
+            // setPokemon
+            this.$router.push({path: '/pokemon'})
+        }
+    },  
     name: 'PokemonCard',
     props: {
         pokemon: Object
