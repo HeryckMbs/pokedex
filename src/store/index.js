@@ -3,7 +3,8 @@ import { createStore } from "vuex";
 export default createStore({
     state:{
         pokemon_selecionado : {},
-        pokemons_carregados : []
+        pokemons_carregados : [],
+        loading: false,
     },
     mutations:{
         storePokemons(state,data){
@@ -24,7 +25,16 @@ export default createStore({
 
         setPokemon(state,data){
             state.pokemon_selecionado = data;
-        }
-       
+        },
+        setLoading(state){
+            state.loading = true;
+            document.getElementById('loader').style.display = 'flex';
+        },
+        unsetLoading(state){
+            document.getElementById('loader').style.display = 'none';
+            state.loading = false;
+            console.log('oi')
+
+        },
     }
 })

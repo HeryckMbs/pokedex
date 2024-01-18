@@ -1,14 +1,9 @@
 <template>
     <div class="grid">
-      
-          <PokemonCard
-         class="item" 
-         :pokemon="pokemon" 
-         v-for="pokemon in $store.state.pokemons_carregados" 
-         :key="pokemon.id">
+
+        <PokemonCard class="item" :pokemon="pokemon" v-for="pokemon in $store.state.pokemons_carregados" :key="pokemon.id">
         </PokemonCard>
     </div>
-    
 </template>
 
 <style scoped>
@@ -44,7 +39,7 @@
 .grid {
     margin: 1% 10%;
     display: grid;
-    
+
     grid-template-areas: 'item item item item ';
 }
 </style>
@@ -53,9 +48,8 @@
 import Api from '/src/http/Api.js';
 import PokemonCard from './PokemonCard.vue'
 export default {
-    components:{ PokemonCard },
-    created(){
-        console.log(this.$store.state.pokemons_carregados)
+    components: { PokemonCard },
+    created() {
     },
     data() {
         return {
@@ -64,42 +58,47 @@ export default {
     },
     methods: {
 
-        loadPokemons() {
-            
-            document.getElementById('loader').style.display = 'flex';
-                Api.callApi().get(this.next_url != '' ? this.next_url : '/pokemon').then(response => {
+
+        async loadPokemons() {
+            if (!this.$store.state.loading) {
+                this.$store.commit('setLoading')
+
+                
+                await Api.callApi().get(this.next_url != '' ? this.next_url : '/pokemon').then(response => {
                     this.next_url = response.data.next;
                     for (let item of response.data.results) {
                         Api.callApi().get(`/pokemon/${item.name}`).then(res => {
-    
-                            this.$store.commit('storePokemons',res.data)
+                            this.$store.commit('storePokemons', res.data)
                         }).catch(error => { })
                     }
-                    
+                    this.$store.commit('unsetLoading')
+
                 }).catch(error => {
-                    
+                    this.$store.commit('unsetLoading')
+
                 })
-                
-            
-            setTimeout(function(){
-                document.getElementById('loader').style.display = 'none';
-            },200)
+
+
+            }
+
 
         }
     },
     mounted() {
         window.addEventListener('scroll', () => {
-            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            if(this.$route.name == 'catalogo'){
+                const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-            if (scrollTop + clientHeight >= scrollHeight - 5) {
-                this.loadPokemons();
+                if (scrollTop + clientHeight >= scrollHeight - 5) {
+                    this.loadPokemons();
+                }
             }
 
         });
 
     },
     beforeMount() {
-        if(this.$store.state.pokemons_carregados.length == 0){
+        if (this.$store.state.pokemons_carregados.length == 0) {
             this.loadPokemons()
         }
     }
