@@ -33,7 +33,6 @@ export default createStore({
         unsetLoading(state){
             document.getElementById('loader').style.display = 'none';
             state.loading = false;
-            console.log('oi')
 
         },
     }

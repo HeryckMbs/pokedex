@@ -12,7 +12,5 @@ export default{
 </script>
 
 <style scoped>
-body{
-    background: black !important;
-}
+
 </style>
