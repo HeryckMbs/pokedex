@@ -2,10 +2,10 @@
     <div @click="goToPokemonDetails($event)">
         
 
-            <img :src="pokemon.sprites.other['dream_world'].front_default" alt="">
+            <img :src="pokemon.sprites.other['official-artwork'].front_default" alt="">
             <div class="">
                 <div class="content">
-                    <h2>{{ captalizeName(pokemon.name) }}</h2>
+                    <h3>{{ captalizeName(pokemon.name) }}</h3>
                     <p class="codPokemon">N° {{ zeroEsquerda(pokemon.id) }}</p>
                 </div>
                 <div class="types">
@@ -14,8 +14,8 @@
                     </div>
                 </div>
             </div>
-</div>
-
+        </div>
+        
 </template>
 
 <script>
@@ -24,8 +24,8 @@ export default {
     created() {
     },
     methods:{
-        goToPokemonDetails(){
-            this.$store.commit('setPokemon',this.pokemon)
+        async goToPokemonDetails() {
+            await this.$store.commit('setPokemon',this.pokemon)
             this.$router.push({path: '/pokemon/'+this.pokemon.id})
         }
     },  
@@ -38,6 +38,37 @@ export default {
 </script>
 
 <style scoped>
+h3{
+    color: white;
+}
+.item {
+    grid-area: 'item';
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #303134;
+    margin: 15px;
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition: 0.5s;
+    -o-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+}
+
+.item:hover {
+    -webkit-transform: translateY(-16px);
+    -moz-transform: translateY(-16px);
+    -ms-transform: translateY(-16px);
+    -o-transform: translateY(-16px);
+    transform: translateY(-16px);
+}
 .content {
 
     padding: 5% 0;
@@ -83,11 +114,15 @@ export default {
     font-style: italic;
     font-weight: 100;
     color: white;
+    font-size: 0.8vw !important;
+    font-family: 'barcadebrawl' ;
+
 }
 
 
 img {
-    max-width: 100%;
+    max-width: 20vw;
+    max-height: 35vh;
     width: 100%;
     height: 80%;
     border-radius: 10px;

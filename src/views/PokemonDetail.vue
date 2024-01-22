@@ -8,51 +8,141 @@
             </div>
             <div class="image">
 
-                <img :src="pokemon.sprites.other['dream_world'].front_default" alt="">
+                <img v-if="pokemon.sprites != undefined" :src="pokemon.sprites.other['official-artwork'].front_default"
+                    alt="">
 
             </div>
+
             <div class="typeList">
-                <div :class="['badge', item.type.name]" v-for="item in pokemon.types">
+                <div :class="['badge', item.type.name]" :key="idx" v-for="(item, idx) in pokemon.types">
                     {{ transformaCamelCase(item.type.name) }}
                 </div>
+                <div class=" water" v-if="detalhesEspecie.is_baby">
+                    Baby
+                </div>
+                <div class="badge dark" v-if="detalhesEspecie.is_legendary">
+                    Legendary
+                </div>
+                <div class="badge dark" v-if="detalhesEspecie.is_mythical">
+                    Baby
+                </div>
             </div>
-            <p><b>Height</b> {{ pokemon.height / 10 }} m</p>
+
+            <p v-if="Object.keys(this.detalhesEspecie).length > 0"><b>Habitat</b> {{
+                transformaCamelCase(detalhesEspecie.habitat.name) }} </p>
+
+            <p><strong>Height</strong> {{ pokemon.height / 10 }} m</p>
             <p><b>Weight</b> {{ pokemon.weight / 10 }} Kg</p>
-            <p>Male : {{ getGender.male }}</p>
-            <p>Female :{{ getGender.female }}</p>
+            <p>Male : {{ getGender.male }} %</p>
+            <p>Female :{{ getGender.female }}%</p>
             <div class="genderRate">
 
             </div>
         </div>
         <div class="infos">
             <div>
-                <h2>About</h2>
-                <div class="about">
-                    {{ descriptionPokemon }}
+                <h4>About</h4>
+                <div class="baseContainer">
+                    <p>{{ descriptionPokemon }}</p>
+                </div>
+            </div>
+            <div>
+                <h4>Habilities</h4>
+                <div class="baseContainer">
+                    <ul class="habilities">
+                        <li :key="index" v-for="(item, index) in pokemon.abilities">
+                            <p>{{ transformaCamelCase(item.ability.name) }}</p>
+                        </li>
+                    </ul>
+                    <div :class="[]">
+
+                        <!--  -->
+                    </div>
                 </div>
             </div>
 
+            <div class="stats">
+                <h4>Base Stats</h4>
+                <div class="baseContainer">
+                    <ul class="">
+
+                    </ul>
+                    <div style="display: flex;">
+                        <div class="" :key="index" v-for="(item, index) in pokemon.stats" style="margin-right: 4%;">
+                            <h6>{{ transformaCamelCase(item.stat.name) }}</h6>
+                            <p style="color: white;">{{ item.base_stat }}</p>
+
+                        </div>
+                    </div>
+                    <!-- <ProgressBar :value="50"></ProgressBar> -->
+
+                    <div :class="[]">
+
+                        <!--  -->
+                    </div>
+                </div>
+            </div>
             <div class="combat">
-                <div class="doubleDamageContainer">
-                    <h2>Double damage To</h2>
-                    <div class="about doubleDamage">
-                        <div :class="[index, 'badge']" v-for="(item, index) in strongAgainst">
-                            {{ transformaCamelCase(index) }}
+                <div class="doubleDamageContainer" v-if="Object.keys(strongAgainst).length > 0">
+                    <h4>Double damage To</h4>
+
+                    <div class="baseContainer doubleDamage">
+                        <div :class="[index, 'badge']" :key="index" v-for="(item, index) in strongAgainst">
+                            <p> {{ transformaCamelCase(index) }}
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="doubleDamageContainer">
-                    <h2>Double damage To</h2>
-                    <div class="about doubleDamage">
-                        <div :class="[index, 'badge']" v-for="(item, index) in strongAgainst">
-                            {{ transformaCamelCase(index) }}
+                <div class="doubleDamageContainer" v-if="Object.keys(weakAgainst).length > 0">
+                    <h4>Double damage from</h4>
+                    <div class="baseContainer doubleDamage">
+                        <div :class="[index, 'badge']" :key="index" v-for="(item, index) in weakAgainst">
+                            <p> {{ transformaCamelCase(index) }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <ProgressBar :value="40"> {{ 10 }}/100 </ProgressBar>
+
+
+            <div>
+                <h4>Extra Info</h4>
+                <div class="baseContainer">
+                    <ul class="habilities">
+                        <li :key="index" v-for="(item, index) in pokemon.abilities">
+                            <p>{{ transformaCamelCase(item.ability.name) }}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
 
         </div>
+    </div>
+    <div class="main-container evolucoesContainer">
+        <h3>Evoluções</h3>
+        <div class="evolucoes">
+            <div class="evolucao-item" v-for="(item, key, index) in arvoreEvolucao" :key="index">
+                <PokemonCard class="item" :pokemon="item" :key="item.id">
+                </PokemonCard>
+                <span>
+                    <h1>></h1>
+                </span>
+                <div v-for="(item, key, index) in linhasEvolucao" :key="index" style="display: flex;flex-direction: column !important;" class="">
+                    <div  class="evolucao-item" v-for="(pokem, index) in item"  >
+                        <div>
+
+                            <PokemonCard class="item" :pokemon="pokem" :key="pokem.id">
+                            </PokemonCard>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="links">
+        <a v-if="$route.params.id > 1" :href="`/pokemon/${parseInt($route.params.id) - 1}`">Previous</a>
+        <a :href="`/pokemon/${parseInt($route.params.id) + 1}`">Next</a>
     </div>
     <div class="container name">
         <h1>{{ transformaCamelCase(pokemon.name) }} - N° {{ pokemon.id }}</h1>
@@ -66,10 +156,7 @@
 
                     <div class="info">
 
-                        <div class="">
-                            <label for="">Habitat</label>
-                            <p>{{ transformaCamelCase(detalhesEspecie.habitat.name) }} </p>
-                        </div>
+
                         <div class="">
                             <label for="">Base Experience</label>
                             <p>{{ pokemon.base_experience }} XP </p>
@@ -89,37 +176,18 @@
                         <div class="types">
                             <label>Weak against</label>
                             <div class="mini-grid">
-                                <div :class="['', 'grid-item', index]" v-for="(item, index) in weakAgainst">
+                                <div :key="index" :class="['', 'grid-item', index]" v-for="(item, index) in weakAgainst">
                                     {{ transformaCamelCase(index) }}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="types"
-                        v-if="detalhesEspecie.is_baby || detalhesEspecie.is_legendary || detalhesEspecie.is_mythical">
-                        <label>Special Attributes</label>
-                        <div class="typeList">
-                            <div class="badge" v-if="detalhesEspecie.is_baby">
-                                Baby
-                            </div>
-                            <div class="badge" v-if="detalhesEspecie.is_legendary">
-                                Legendary
-                            </div>
-                            <div class="badge" v-if="detalhesEspecie.is_mythical">
-                                Baby
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="types">
                         <label>Abilities</label>
                         <div class=" mini-grid">
-                            <div v-for="item in pokemon.abilities.filter((element) => !element.is_hidden)"
-                                :class="['grid-item', 'badge']">
-                                {{ transformaCamelCase(item.ability.name) }}
 
-                                <!--  -->
-                            </div>
                         </div>
                     </div>
 
@@ -137,7 +205,8 @@
                         </div>
                         <div class="">
                             <label for="">Color</label>
-                            <p>{{ transformaCamelCase(detalhesEspecie.color.name) }} </p>
+                            <p v-if="Object.keys(this.detalhesEspecie).length > 0">{{
+                                transformaCamelCase(detalhesEspecie.color.name) }} </p>
                         </div>
                     </div>
 
@@ -171,7 +240,58 @@
 
 
 <style scoped>
-.about {
+.evolucao-item {
+    display: flex;
+    align-items: center;
+}
+
+.evolucoesContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 3% !important;
+    align-items: center;
+}
+
+.evolucoes {
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.stats {
+    margin-top: 2%;
+}
+
+.badge {
+    font-size: 14pt;
+    color: white;
+}
+
+h2,
+h1,
+h4,
+h3,
+h5,
+h6 {
+    color: #ED1E24;
+
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+li p {
+    color: white;
+    text-align: center;
+    padding-right: 16px;
+    text-decoration: none;
+}
+
+.baseContainer {
     background-color: #1A1A1A;
     padding: 2%;
     margin-top: 10px;
@@ -181,42 +301,50 @@
 
 .combat {
     display: flex;
-
+    margin: 3% auto;
 }
+
 .shell {
-  height: 20px;
-  width: 250px;
-  border: 1px solid #aaa;
-  border-radius: 13px;
-  padding: 3px;
+    height: 20px;
+    width: 250px;
+    border: 1px solid #aaa;
+    border-radius: 13px;
+    padding: 3px;
 }
 
 .bar {
-  background: linear-gradient(to right, #B993D6, #8CA6DB);
-  height: 20px;
-  width: 15px;
-  border-radius: 9px;
- 
+    background: linear-gradient(to right, #B993D6, #8CA6DB);
+    height: 20px;
+    width: 15px;
+    border-radius: 9px;
+
 }
 
 .bar span {
     float: right;
     padding: 4px 5px;
     color: #fff;
-    font-size: 0.7em
-  }
+    /* font-size: 0.7em */
+}
 
 .doubleDamage {
     display: grid;
     grid-template-areas: 'item item';
     gap: 5%;
     padding: 8%;
+    width: 100%;
 
 }
 
+.doubleDamage .badge {
+    padding: 0 !important;
+}
+
+
 .doubleDamageContainer {
     margin-right: 5%;
-    width: 30%;
+    width: 50%;
+    height: 100%;
 }
 
 .statusContainer {
@@ -241,7 +369,7 @@
 }
 
 .badge {
-    padding: 17%;
+    padding: 10%;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -259,14 +387,29 @@
     gap: 2%;
 }
 
+.links {
+    width: 90%;
+    margin: 0 auto;
+    padding: 1%;
+    justify-content: space-between;
+    display: flex;
+    gap: 2%;
+}
+
+.links a {
+    background-color: #242424;
+    padding: 1% 2%;
+}
+
 .presentation {
-    width: 15%;
+    width: 20%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #1A1A1A;
     border-radius: 10px;
+    padding: 1%;
 }
 
 .image {
@@ -278,19 +421,18 @@
 }
 
 .image img {
-    width: 70%;
+    width: 90%;
 }
 
 .infos {
-    width: 75%;
+    width: 70%;
 }
 </style>
 
 <script>
 import Api from '@/http/Api';
-import { VueperSlides, VueperSlide } from 'vueperslides'
 import ProgressBar from 'primevue/progressbar';
-
+import PokemonCard from '@/components/Home/PokemonCard.vue';
 export default {
 
     computed: {
@@ -320,30 +462,46 @@ export default {
             }
         },
         descriptionPokemon() {
-            let description = this.detalhesEspecie.flavor_text_entries.filter((element) => element.language.name == 'en')[0].flavor_text
-            return description
+            if (this.detalhesEspecie.flavor_text_entries) {
+                let description = this.detalhesEspecie.flavor_text_entries.filter((element) => element.language.name == 'en')[0].flavor_text
+                return description
+            }
+            return ''
         },
         generaPokemon() {
-            let genera = this.detalhesEspecie.genera.filter((element) => element.language.name == 'en')[0].genus
-            return genera
+            if (this.detalhesEspecie.genera) {
+                let genera = this.detalhesEspecie.genera.filter((element) => element.language.name == 'en')[0].genus
+                return genera
+            }
+            return ''
         },
         spriteImages() {
-            let images = this.filtrarNaoNulos(this.pokemon.sprites);
-            return images;
+            if (this.pokemon.sprites) {
+                let images = this.filtrarNaoNulos(this.pokemon.sprites);
+                return images;
+            }
+            return []
         },
         showdownImages() {
-            return this.filtrarNaoNulos(this.pokemon.sprites.other.showdown);
+            if (this.pokemon.sprites) {
+                return this.filtrarNaoNulos(this.pokemon.sprites.other.showdown);
+            }
+            return []
         },
         mainArtsImages() {
-            let imagesDream = this.filtrarNaoNulos(this.pokemon.sprites.other.dream_world);
-            let home = this.filtrarNaoNulos(this.pokemon.sprites.other.home);
-            let oficialArt = this.filtrarNaoNulos(this.pokemon.sprites.other['official-artwork']);
-            return [...Object.values(imagesDream), ...Object.values(home), ...Object.values(oficialArt)]
+            if (this.pokemon.sprites) {
+                let imagesDream = this.filtrarNaoNulos(this.pokemon.sprites.other.dream_world);
+                let home = this.filtrarNaoNulos(this.pokemon.sprites.other.home);
+                let oficialArt = this.filtrarNaoNulos(this.pokemon.sprites.other['official-artwork']);
+                return [...Object.values(imagesDream), ...Object.values(home), ...Object.values(oficialArt)]
+            }
+            return []
         }
 
     },
     components: {
-        ProgressBar
+        ProgressBar,
+        PokemonCard
     },
 
     data() {
@@ -360,14 +518,89 @@ export default {
             ],
             pokemon: {},
             evolucao: {},
+            arvoreEvolucao: {},
+            linhasEvolucao: {},
             characteristic: {},
             detalhesEspecie: {},
             strongAgainst: {},
             weakAgainst: {},
-            imageLinks: []
+            imageLinks: [],
+            teste: {}
         };
     },
     methods: {
+        mountChain() {
+            Api.callApi().get(`/pokemon/${this.evolucao.specie_initial.name}`).then(res => {
+
+                this.arvoreEvolucao[0] = res.data;
+            }).catch(error => { })
+
+            for (let item in this.evolucao.evolutions) {
+                let linhaEvolucaoPoke = this.evolucao.evolutions[item];
+                this.linhasEvolucao[linhaEvolucaoPoke.line] = [];
+                for (var pokemonIt of linhaEvolucaoPoke.evolutions) {
+                    Api.callApi().get(`/pokemon/${pokemonIt.name}`).then(res => {
+                        console.log(res.data)
+
+                        this.linhasEvolucao[linhaEvolucaoPoke.line].push(res.data)
+                    }).catch(error => { })
+                }
+            }
+
+            console.log(this.arvoreEvolucao)
+        },
+        // do {
+        //     this.evolucao[order] = chain.species;
+        //     order++
+        //     for(let item of chain.evolves_to){
+        //         this.evolucao[order] = item.species;
+        //         order++
+        //     }
+        //     chain = chain.evolves_to[0]
+        //     if (chain.evolves_to.length == 0) {
+        //         order++
+        //         this.evolucao[order] = chain.species;
+        //         fim = true;
+        //     }
+        // } while (!fim)
+        mountEvolutionTree(tree) {
+            let order = 0;
+            let order2 = 0;
+            let chain = tree.evolves_to;
+            let fim = false
+
+
+            this.evolucao['specie_initial'] = tree.species;
+            this.evolucao['evolutions'] = [];
+            for (let item in chain) {
+                let cadeia = chain[item];
+
+                let evolutionLine = { line: item, evolutions: [] }
+
+                while (cadeia.evolves_to.length > 0) {
+                    evolutionLine.evolutions.push(cadeia.species)
+                    cadeia = cadeia.evolves_to[0];
+                }
+
+                if (cadeia.evolves_to.length == 0) {
+                    evolutionLine.evolutions.push(cadeia.species)
+
+                }
+                this.evolucao['evolutions'].push(evolutionLine)
+
+                fim = false;
+                // do {
+
+                // } while (!fim)
+
+
+            }
+            console.log('cabou')
+            // do {
+            // } while ()
+
+            this.mountChain();
+        },
         filtrarNaoNulos(objeto) {
             return Object.entries(objeto)
                 .filter(([chave, valor]) => valor !== null)
@@ -413,9 +646,9 @@ export default {
             return ''
         },
         async getSpecieDetail() {
+            console.log('oi')
             if (!this.$store.state.loading) {
                 this.$store.commit('setLoading')
-
 
                 await Api.callApi().get(`/pokemon-species/${this.pokemon.id}`).then(response => {
                     this.detalhesEspecie = response.data
@@ -430,9 +663,8 @@ export default {
             }
         },
         async getEvolutionChain(url) {
-
             await Api.callApi().get(url).then(response => {
-                evolucao = response.data
+                this.mountEvolutionTree(response.data.chain)
             }).catch(error => {
                 this.$store.commit('unsetLoading')
             })
@@ -460,6 +692,7 @@ export default {
                         }
 
                     }
+
                 }).catch(error => {
                     this.$store.commit('unsetLoading')
                 })
@@ -468,20 +701,21 @@ export default {
 
         }
     },
-    async beforeMount() {
+    created() {
+
         if (Object.keys(this.$store.state.pokemon_selecionado).length > 0) {
+
             this.pokemon = this.$store.state.pokemon_selecionado
             this.getSpecieDetail();
-
         } else {
             let id = this.$route.params.id;
-            await Api.callApi().get(`/pokemon/${id}`).then(res => {
+            Api.callApi().get(`/pokemon/${id}`).then(res => {
                 this.pokemon = res.data
+                this.getSpecieDetail();
 
             }).catch(error => { })
         }
         this.imageLinks = this.extrairValores(this.pokemon.sprites)
-        this.getSpecieDetail();
     }
 }
 </script>

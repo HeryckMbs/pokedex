@@ -6,7 +6,6 @@ export default {
     HeaderNav
   },
   created(){
-    console.log(this.$store.state)
   }
 }
 </script>

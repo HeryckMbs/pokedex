@@ -7,34 +7,7 @@
 </template>
 
 <style scoped>
-.item {
-    grid-area: 'item';
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: #303134;
-    margin: 15px;
-    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.8);
-    padding: 15px;
-    border-radius: 10px;
-    -webkit-transform: translateY(0);
-    -moz-transform: translateY(0);
-    -ms-transform: translateY(0);
-    -o-transform: translateY(0);
-    transform: translateY(0);
-    -webkit-transition: 0.5s;
-    -o-transition: 0.5s;
-    -moz-transition: 0.5s;
-    transition: 0.5s;
-}
 
-.item:hover {
-    -webkit-transform: translateY(-16px);
-    -moz-transform: translateY(-16px);
-    -ms-transform: translateY(-16px);
-    -o-transform: translateY(-16px);
-    transform: translateY(-16px);
-}
 
 .grid {
     margin: 1% 10%;

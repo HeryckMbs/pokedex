@@ -16,31 +16,31 @@ a{
 }
 
 .normal {
-  color: black;
+  color:black !important;
   background-color: #A8A878 !important;
   /* Cor neutra para representar Normal */
 }
 
 .fighting {
-  color: white;
+  color: white !important;
   background-color: #C03028 !important;
   /* Cor de luta para representar Fighting */
 }
 
 .flying {
-  color: white;
+  color: white !important;
   background-color: #A890F0 !important;
   /* Cor de voo para representar Flying */
 }
 
 .poison {
-  color: white;
+  color: white !important;
   background-color: #A040A0 !important;
   /* Cor venenosa para representar Poison */
 }
 
 .ground {
-  color: white;
+  color: white !important;
   background-color: #794500 !important;
   /* Cor de solo para representar Ground */
 }
@@ -51,38 +51,38 @@ a{
 }
 
 .bug {
-  color: white;
+  color: white !important;
   background-color: #A8B820 !important;
   /* Cor de inseto para representar Bug */
 }
 
 .ghost {
-  color: white;
+  color: white !important;
 
   background-color: #705898!important;
   /* Cor fantasmagórica para representar Ghost */
 }
 
 .steel {
-  color: black;
+  color:black !important;
   background-color: #B8B8D0!important;
   /* Cor de aço para representar Steel */
 }
 
 .fire {
-  color: white;
+  color: white !important;
   background-color: #F08030!important;
   /* Cor de fogo para representar Fire */
 }
 
 .water {
-  color: white;
+  color: white !important;
   background-color: #6890F0!important;
   /* Cor de água para representar Water */
 }
 
 .grass {
-  color: white;
+  color: white !important;
   background-color: #78C850!important;
   /* Cor de grama para representar Grass */
 }
@@ -94,19 +94,19 @@ a{
 }
 
 .psychic {
-  color: black;
+  color:black !important;
   background-color: #F85888 !important; 
   /* Cor psíquica para representar Psychic */
 }
 
 .ice {
-  color: black;
+  color:black !important;
   background-color: #98D8D8 !important;
   /* Cor de gelo para representar Ice */
 }
 
 .dragon {
-  color: white;
+  color: white !important;
   background-color: #7038F8 !important;
   /* Cor de dragão para representar Dragon */
 }
