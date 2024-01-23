@@ -1,5 +1,11 @@
 <template>
+    <div class="links">
+        <a v-if="$route.params.id > 1" :href="`/pokemon/${parseInt($route.params.id) - 1}`">Previous</a>
+        <a :href="`/pokemon/${parseInt($route.params.id) + 1}`">Next</a>
+    </div>
+
     <div class="main-container">
+
         <div class="presentation">
             <h2>#{{ pokemon.id }}</h2>
             <h1>{{ transformaCamelCase(pokemon.name) }}</h1>
@@ -28,7 +34,7 @@
                 </div>
             </div>
 
-            <p v-if="Object.keys(this.detalhesEspecie).length > 0"><b>Habitat</b> {{
+            <p v-if="Object.keys(detalhesEspecie).length > 0 && detalhesEspecie.habitat != undefined"><b>Habitat</b> {{
                 transformaCamelCase(detalhesEspecie.habitat.name) }} </p>
 
             <p><strong>Height</strong> {{ pokemon.height / 10 }} m</p>
@@ -83,7 +89,8 @@
                 </div>
             </div>
             <div class="combat">
-                <div class="doubleDamageContainer" v-if="Object.keys(strongAgainst).length > 0">
+                <div class="doubleDamageContainer" style="    margin-right: 5%;
+" v-if="Object.keys(strongAgainst).length > 0">
                     <h4>Double damage To</h4>
 
                     <div class="baseContainer doubleDamage">
@@ -104,35 +111,69 @@
             </div>
 
 
-            <div>
+            <div class="">
                 <h4>Extra Info</h4>
                 <div class="baseContainer">
-                    <ul class="habilities">
-                        <li :key="index" v-for="(item, index) in pokemon.abilities">
-                            <p>{{ transformaCamelCase(item.ability.name) }}</p>
-                        </li>
+                    <ul class="">
+
                     </ul>
+
+                    <div style="display: flex;">
+                        <div class="" style="margin-right: 4%;">
+                            <h6> Hapiness</h6>
+                            <p style="color: white;">{{ detalhesEspecie.base_happiness ?? '-' }} </p>
+
+                        </div>
+                        <div class="" style="margin-right: 4%;">
+                            <h6>Capture Rate
+                            </h6>
+                            <p style="color: white;">{{ detalhesEspecie.capture_rate ?? '-' }} </p>
+
+                        </div>
+                        <div class="" style="margin-right: 4%;">
+                            <h6>Color</h6>
+                            <p style="color: white;">{{ transformaCamelCase(detalhesEspecie.color.name) ?? '-' }}
+                            </p>
+
+                        </div>
+                        <div class="" style="margin-right: 4%;">
+                            <h6>Base Experience</h6>
+                            <p style="color: white;">{{ pokemon.base_experience }} XP
+                            </p>
+
+                        </div>
+
+                    </div>
+                    <!-- <ProgressBar :value="50"></ProgressBar> -->
+
                 </div>
             </div>
 
 
         </div>
     </div>
+
+
     <div class="main-container evolucoesContainer">
-        <h3>Evoluções</h3>
+        <h3>Evolutions</h3>
         <div class="evolucoes">
             <div class="evolucao-item" v-for="(item, key, index) in arvoreEvolucao" :key="index">
-                <PokemonCard class="item" :pokemon="item" :key="item.id">
-                </PokemonCard>
-                <span>
-                    <h1>></h1>
-                </span>
-                <div v-for="(item, key, index) in linhasEvolucao" :key="index" style="display: flex;flex-direction: column !important;" class="">
-                    <div  class="evolucao-item" v-for="(pokem, index) in item"  >
-                        <div>
+                <div class="">
+                    <PokemonCard style="" class="item" :pokemon="item" :key="item.name">
+                    </PokemonCard>
+                </div>
 
-                            <PokemonCard class="item" :pokemon="pokem" :key="pokem.id">
+                <div class="" style="display: flex; flex-direction: column;">
+                    <div v-for="(item, key, index) in linhasEvolucao" :key="index"
+                        style="display: flex;flex-direction: row !important;" class="">
+                        <div class="evolucao-item" v-for="(pokem, index, key) in item">
+
+
+                            <h1 v-if="index < item.length">></h1>
+
+                            <PokemonCard class="item" :pokemon="pokem" :key="pokem.name">
                             </PokemonCard>
+
                         </div>
                     </div>
                 </div>
@@ -140,109 +181,79 @@
             </div>
         </div>
     </div>
-    <div class="links">
-        <a v-if="$route.params.id > 1" :href="`/pokemon/${parseInt($route.params.id) - 1}`">Previous</a>
-        <a :href="`/pokemon/${parseInt($route.params.id) + 1}`">Next</a>
-    </div>
-    <div class="container name">
-        <h1>{{ transformaCamelCase(pokemon.name) }} - N° {{ pokemon.id }}</h1>
-    </div>
-
-    <div class="container " id="pokemon">
-        <div class="content">
-
-            <div class="column">
-                <div class="carateristicas dog-ear">
-
-                    <div class="info">
-
-
-                        <div class="">
-                            <label for="">Base Experience</label>
-                            <p>{{ pokemon.base_experience }} XP </p>
-                        </div>
-                    </div>
 
 
 
-                    <div class="" style="display: flex;">
-                        <div class="types">
-                            <label>Strong against</label>
-                            <div class="mini-grid">
-
-                            </div>
-                        </div>
-
-                        <div class="types">
-                            <label>Weak against</label>
-                            <div class="mini-grid">
-                                <div :key="index" :class="['', 'grid-item', index]" v-for="(item, index) in weakAgainst">
-                                    {{ transformaCamelCase(index) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="main-container  galeryContainer">
+        <h1>Galery</h1>
 
 
-                    <div class="types">
-                        <label>Abilities</label>
-                        <div class=" mini-grid">
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="carateristicas dog-ear">
-
-                    <div class="info">
-                        <div class="">
-                            <label for="">Hapiness</label>
-                            <p>{{ detalhesEspecie.base_happiness }} </p>
-                        </div>
-                        <div class="">
-                            <label for="">Capture Rate</label>
-                            <p>{{ detalhesEspecie.capture_rate }} </p>
-                        </div>
-                        <div class="">
-                            <label for="">Color</label>
-                            <p v-if="Object.keys(this.detalhesEspecie).length > 0">{{
-                                transformaCamelCase(detalhesEspecie.color.name) }} </p>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <h1>Galeria</h1>
         <div class="galery">
-            <div class="centered" v-for="image in spriteImages" :key="image">
-                <img width="50%" :src="image" alt="">
 
-            </div>
-            <div v-for="image in showdownImages" :key="image" class="centered">
-                <img width="50%" :src="image" alt="">
-            </div>
-            <div class="centered" v-for="image in mainArtsImages" :key="image">
-                <img width="50%" :src="image" alt="">
-            </div>
+            <vueper-slides class="no-shadow" :arrows-outside="false" :visible-slides="1" slide-multiple :gap="3"
+                :slide-ratio="0.9 / 1" :dragging-distance="200"
+                :breakpoints="{ 800: { visibleSlides: 4, slideMultiple: 2 } }">
+                <vueper-slide v-for="(slide, i) in showdownImages" :key="i" :image="slide" />
 
+            </vueper-slides>
+
+
+            <vueper-slides :slide-ratio="0.9 / 1" class="no-shadow" arrows-outside bullets-outside transition-speed="250">
+                <vueper-slide v-for="(slide, i) in mainArtsImages" :key="i" :image="slide" />
+
+            </vueper-slides>
         </div>
-        <div class="galery"></div>
-        <div style="display: flex; ">
-            <!-- <img  v-for="image in pokemon.sprites" :key="image" :src="image" alt=""> -->
-        </div>
+
     </div>
 </template>
 
 
 <style scoped>
+.galeryContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3% !important;
+    margin-bottom: 3% !important;
+}
+
+.vueperslide__image {
+    transform: scale(1.5) rotate(-10deg);
+
+}
+
+.vueperslides {
+    width: 40%;
+    margin-right: 10%;
+}
+
+.vueperslide__title {
+    font-size: 7em;
+    opacity: 0.7;
+}
+
+.vueperslides--fixed-height {
+    height: 300px;
+}
+
+.galery {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+
+
+.item img {
+    height: 10px !;
+}
+
 .evolucao-item {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .evolucoesContainer {
@@ -256,6 +267,7 @@
 .evolucoes {
     width: 100%;
     flex-wrap: wrap;
+
 }
 
 .stats {
@@ -301,6 +313,7 @@ li p {
 
 .combat {
     display: flex;
+    justify-content: space-between;
     margin: 3% auto;
 }
 
@@ -331,7 +344,7 @@ li p {
     display: grid;
     grid-template-areas: 'item item';
     gap: 5%;
-    padding: 8%;
+    padding: 5%;
     width: 100%;
 
 }
@@ -342,7 +355,6 @@ li p {
 
 
 .doubleDamageContainer {
-    margin-right: 5%;
     width: 50%;
     height: 100%;
 }
@@ -384,6 +396,7 @@ li p {
     padding: 1%;
     justify-content: center;
     display: flex;
+    border-radius: 10px;
     gap: 2%;
 }
 
@@ -433,9 +446,12 @@ li p {
 import Api from '@/http/Api';
 import ProgressBar from 'primevue/progressbar';
 import PokemonCard from '@/components/Home/PokemonCard.vue';
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
 export default {
 
     computed: {
+
         getGender() {
             let genderRate = this.detalhesEspecie.gender_rate;
             switch (genderRate) {
@@ -501,7 +517,8 @@ export default {
     },
     components: {
         ProgressBar,
-        PokemonCard
+        PokemonCard,
+        VueperSlides, VueperSlide
     },
 
     data() {

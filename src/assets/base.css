@@ -89,6 +89,13 @@ body {
 h1,h2,h3,h4,h5,h6{
   font-family: 'barcadebrawl' ;
   margin: 2% 0;
+  font-size: 0.98vw;
+
+}
+
+h6{
+  font-size: 0.78vw !important;
+
 }
 
 p{

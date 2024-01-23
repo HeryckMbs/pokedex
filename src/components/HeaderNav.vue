@@ -3,7 +3,9 @@
         <img src="../assets/pokebola.png" alt="">
         <div class="nav-items">
             <router-link to="/">Home</router-link>
-            <a href="">Pokedex</a>
+            <router-link to="/catalogo">Pokedex</router-link>
+
+            
         </div>
     </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <div @click="goToPokemonDetails($event)">
+    <div @click="goToPokemonDetails($event,pokemon)">
         
 
             <img :src="pokemon.sprites.other['official-artwork'].front_default" alt="">
@@ -14,6 +14,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
         
 </template>
@@ -24,9 +25,13 @@ export default {
     created() {
     },
     methods:{
-        async goToPokemonDetails() {
-            await this.$store.commit('setPokemon',this.pokemon)
-            this.$router.push({path: '/pokemon/'+this.pokemon.id})
+        async goToPokemonDetails(event,pokemon) {
+            this.$store.commit('setLoading')
+            await this.$store.commit('setPokemon',pokemon)
+           
+            await this.$router.push({path: '/pokemon/'+pokemon.id}).then(() => this.$router.go())
+            this.$store.commit('unsetLoading')
+
         }
     },  
     name: 'PokemonCard',
