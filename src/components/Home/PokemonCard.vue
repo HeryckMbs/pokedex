@@ -126,10 +126,8 @@ h3{
 
 
 img {
-    width: 20%;
-    height: 35%;
-    width: 100%;
-    height: 80%;
+    max-height:30vh;
+    
     border-radius: 10px;
     background: #242424;
 }

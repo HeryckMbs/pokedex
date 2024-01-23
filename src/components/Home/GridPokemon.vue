@@ -1,5 +1,5 @@
 <template>
-    <button @click="showFilters = !showFilters">Mostrar filtros</button>
+    <button class="showFilters" @click="showFilters = !showFilters">Mostrar filtros</button>
     <Transition>
 
         <div v-if="showFilters" class="filtros">
@@ -7,13 +7,24 @@
                 <h1>Pesquisa</h1>
                 <input type="text" name="" class="filterField" v-model="pesquisa" id="">
             </div>
+            <div class="order">
+                <label for="">Ordenar por</label>
+                <select name="" @change="orderPokemons()" v-model="order" id="">
+                    <option value="nomeCrescente">Nome - Crescente</option>
+                    <option value="nomeDecrescente">Nome - Decrescente</option>
+                    <option value="numeroCrescente">Número - Crescente</option>
+                    <option value="numeroDecrescente">Número - Decrescente</option>
+                </select>
+            </div>
             <div class=" gridTypes">
                 <div :class="['badge', item, 'typeFilter']" @click="selectTypeFilter($event, item)"
                     v-for="(item, idx) in types">
                     {{
                         item.toLowerCase() }}</div>
             </div>
-            <button class="button-acess " @click="filterPokemon()">Pesquisar</button>
+
+            <button class=" " @click="filterPokemon()">Pesquisar</button>
+
         </div>
     </Transition>
     <div class="grid">
@@ -23,10 +34,15 @@
 
     </div>
     <button @click="loadPokemons();">Mostrar filtros</button>
-
 </template>
 
 <style scoped>
+.showFilters{
+    margin: 0 2%;
+
+}
+
+
 /* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {
@@ -42,8 +58,30 @@
     opacity: 0.8;
 }
 
-button {
-    width: 10%;
+.filtros button {
+    padding: 1% 2%;
+  
+  background-color: red;
+  margin: 3% 0;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  font-weight: bolder;
+  
+}
+
+.order {
+    display: flex;
+    flex-direction: column;
+    margin: 2% auto;
+}
+
+.order select {
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
 }
 
 .filterBox {
@@ -100,7 +138,8 @@ export default {
             pesquisa: '',
             types: [],
             typesSelecteds: [],
-            showFilters: false
+            showFilters: false,
+            order: ''
         }
     },
     methods: {
@@ -119,13 +158,31 @@ export default {
 
 
         },
+        orderDecrescente(a, b) {
+            console.log([a<b,a>b])
+            if (a > b) {
+                return -1;
+            } else if (a < b) {
+                return 1;
+            } else {
+                return 0;
+            }
+        },
+        orderCrescente(a, b) {
+            if (a < b) {
+                return -1;
+            } else if (a > b) {
+                return 1;
+            } else {
+                return 0;
+            }
+        },
         filterPokemon() {
             console.log('oi')
             if (this.pesquisa == '' && this.typesSelecteds.length == 0) {
                 this.pokemon_filtrados = this.$store.state.pokemons_carregados;
             } else {
                 this.pokemon_filtrados = this.$store.state.pokemons_carregados.filter((element) => {
-                    console.log(element)
                     if (this.typesSelecteds.length == 0) {
                         return true
                     } else {
@@ -137,9 +194,27 @@ export default {
                         return false;
                     }
 
+
                 }).filter((element) => this.pesquisa != '' ? element.name.includes(this.pesquisa.toLowerCase()) : true)
+
+
             }
-            console.log('cabo')
+        },
+
+        orderPokemons() {
+            console.log(this.order)
+            if (this.order == 'nomeCrescente') {
+                this.pokemon_filtrados = this.pokemon_filtrados.sort((a, b) => this.orderCrescente(a.name, b.name))
+            }
+            if (this.order == 'numeroCrescente') {
+                this.pokemon_filtrados = this.pokemon_filtrados.sort((a, b) => this.orderCrescente(a.id, b.id))
+            }
+            if (this.order == 'nomeDecrescente') {
+                this.pokemon_filtrados = this.pokemon_filtrados.sort((a, b) => this.orderDecrescente(a.nome, b.nome))
+            }
+            if (this.order == 'numeroDecrescente') {
+                this.pokemon_filtrados = this.pokemon_filtrados.sort((a, b) => this.orderDecrescente(a.id, b.id))
+            }
         },
         async loadPokemons() {
             if (!this.$store.state.loading) {
