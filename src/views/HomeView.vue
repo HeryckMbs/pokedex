@@ -20,7 +20,7 @@ export default {
 
       </div>
       <div class="art">
-        <img src="../assets/pokemons.png" alt="">
+        <!-- <img src="../assets/pokemons.png" alt=""> -->
       </div>
     </div>
   </main>
