@@ -1,5 +1,7 @@
 <template>
-<GridPokemon></GridPokemon>
+    <div class="containerCatalogo">
+        <GridPokemon></GridPokemon>
+    </div>
 </template>
 
 <script>
@@ -12,5 +14,7 @@ export default{
 </script>
 
 <style scoped>
-
+.containerCatalogo{
+    margin: 1% 10%;
+}
 </style>

@@ -89,7 +89,6 @@ body {
 h1,h2,h3,h4,h5,h6{
   font-family: 'barcadebrawl' ;
   margin: 2% 0;
-  font-size: 0.98vw;
 
 }
 
@@ -103,6 +102,13 @@ p{
   color: white;
 }
 
-.codPokemon{
-  
+.badge {
+  margin-right: 5px;
+  padding: 4% 8%;
+  box-shadow: 0 3px 11px rgba(0, 0, 0, 0.8);
+  font-size: 100%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

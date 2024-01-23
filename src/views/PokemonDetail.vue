@@ -274,10 +274,7 @@
     margin-top: 2%;
 }
 
-.badge {
-    font-size: 14pt;
-    color: white;
-}
+
 
 h2,
 h1,
@@ -380,13 +377,13 @@ li p {
     padding: 4% !important;
 }
 
-.badge {
+/* .badge {
     padding: 10%;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 
 .main-container {
