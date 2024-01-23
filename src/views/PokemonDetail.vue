@@ -118,7 +118,7 @@
 
                     </ul>
 
-                    <div style="display: flex;">
+                    <div v-if="Object.keys(detalhesEspecie).length > 0 " style="display: flex;">
                         <div class="" style="margin-right: 4%;">
                             <h6> Hapiness</h6>
                             <p style="color: white;">{{ detalhesEspecie.base_happiness ?? '-' }} </p>
@@ -132,7 +132,7 @@
                         </div>
                         <div class="" style="margin-right: 4%;">
                             <h6>Color</h6>
-                            <p style="color: white;">{{ transformaCamelCase(detalhesEspecie.color.name) ?? '-' }}
+                            <p style="color: white;">{{ transformaCamelCase(detalhesEspecie.color.name ?? '-') ?? '-' }}
                             </p>
 
                         </div>
@@ -660,27 +660,23 @@ export default {
             return ''
         },
         async getSpecieDetail() {
-            console.log('oi')
-            if (!this.$store.state.loading) {
-                this.$store.commit('setLoading')
-
+            console.log(!this.$store.state.loading)
+                
                 await Api.callApi().get(`/pokemon-species/${this.pokemon.id}`).then(response => {
+
                     this.detalhesEspecie = response.data
                     this.getEvolutionChain(response.data.evolution_chain.url);
                     this.getDamageRelation();
                 }).catch(error => {
-                    this.$store.commit('unsetLoading')
                 })
 
 
-                this.$store.commit('unsetLoading')
-            }
+            
         },
         async getEvolutionChain(url) {
             await Api.callApi().get(url).then(response => {
                 this.mountEvolutionTree(response.data.chain)
             }).catch(error => {
-                this.$store.commit('unsetLoading')
             })
         },
 
@@ -708,7 +704,6 @@ export default {
                     }
 
                 }).catch(error => {
-                    this.$store.commit('unsetLoading')
                 })
             }
 
@@ -719,7 +714,8 @@ export default {
 
         if (Object.keys(this.$store.state.pokemon_selecionado).length > 0) {
 
-            this.pokemon = this.$store.state.pokemon_selecionado
+            this.pokemon = this.$store.state.pokemon_selecionado          
+
             this.getSpecieDetail();
         } else {
             let id = this.$route.params.id;

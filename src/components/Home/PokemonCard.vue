@@ -126,8 +126,8 @@ h3{
 
 
 img {
-    max-width: 20vw;
-    max-height: 35vh;
+    width: 20%;
+    height: 35%;
     width: 100%;
     height: 80%;
     border-radius: 10px;

@@ -42,15 +42,15 @@ h1{
 
 .grid {
     display: grid;
-    grid-template-areas: 'item item item item ';
-    margin-bottom: 25%;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr ));  
+      margin-bottom: 25%;
 }
 
 .gridTypes {
     display: grid;
-
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr ));  
     gap: 10px;
-    grid-template-areas: 'item item item item item item item item';
+    
 
 }
 
