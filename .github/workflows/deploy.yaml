@@ -15,8 +15,8 @@ jobs:
       - name: setup git auth
         env:
           email: 'heryckmota@gmail.com'
-          username: 'heryckmbss'
-          access_token: '<seu-access-token>'
+          username: 'heryckmbs'
+          access_token: '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'
         run: |
           git config --global credential.helper store
           echo "https://${access_token}:x-oauth-basic@github.com" > ~/.git-credentials
