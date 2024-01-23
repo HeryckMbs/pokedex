@@ -1,9 +1,14 @@
 <template>
     <div class="filtros">
-        <input @keyup="filterPokemon()" type="text" name="" v-model="pesquisa" id="">
+        <div class="filterBox">
+           <h1>Pesquisa</h1>
+            <input @change="filterPokemon()" type="text" name="" class="filterField" v-model="pesquisa" id="">
+
+        </div>
         <div class=" gridTypes">
-            <div :class="['badge', item,'typeFilter']" @click="selectTypeFilter($event, item)" v-for="(item, idx) in types">{{
-                item.toLowerCase() }}</div>
+            <div :class="['badge', item, 'typeFilter']" @click="selectTypeFilter($event, item)" v-for="(item, idx) in types">
+                {{
+                    item.toLowerCase() }}</div>
         </div>
     </div>
     <div class="grid">
@@ -14,9 +19,27 @@
 </template>
 
 <style scoped>
-.typeFilter{
+.typeFilter {
     opacity: 0.8;
 }
+.filterBox{
+    margin: 2% 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.filterField{
+    width: 100%;
+    margin-top: 10px;
+    padding: 0.5%;
+    border-radius: 10px;
+    border: 0;
+}
+h1{
+    margin: 0 !important;
+}
+
 .grid {
     display: grid;
     grid-template-areas: 'item item item item ';
@@ -32,7 +55,7 @@
 }
 
 .filtros {
-    padding: 2%;
+    padding: 0 2%;
 }
 </style>
 
@@ -70,7 +93,7 @@ export default {
             if (this.typesSelecteds.length == 0) {
                 this.filterPokemon()
             } else {
-                this.pokemon_filtrados = this.$store.state.pokemons_carregados.filter((element) => {
+                this.pokemon_filtrados = this.pokemon_filtrados.filter((element) => {
                     let typePokemons = [];
                     for (var type of element.types) {
                         typePokemons.push(type.type.name)
@@ -78,23 +101,22 @@ export default {
                     const contains = typePokemons.some(element => {
                         return this.typesSelecteds.includes(element);
                     });
-                    return  contains
+                    return contains
                 })
             }
-            
+
 
 
         },
         filterPokemon() {
+            console.log('oi')
             if (this.pesquisa == '') {
                 this.pokemon_filtrados = this.$store.state.pokemons_carregados;
             } else {
                 this.pokemon_filtrados = this.pokemon_filtrados.filter((element) => element.name.includes(this.pesquisa.toLowerCase()))
             }
-            if (this.typesSelecteds.length == 0) {
-                this.filterPokemon()
-            } else {
-                this.pokemon_filtrados = this.$store.state.pokemons_carregados.filter((element) => {
+            if (this.typesSelecteds.length != 0) {
+                this.pokemon_filtrados = this.pokemon_filtrados.filter((element) => {
                     let typePokemons = [];
                     for (var type of element.types) {
                         typePokemons.push(type.type.name)
@@ -102,9 +124,10 @@ export default {
                     const contains = typePokemons.some(element => {
                         return this.typesSelecteds.includes(element);
                     });
-                    return  contains
+                    return contains
                 })
             }
+            console.log('cabo')
         },
         async loadPokemons() {
             if (!this.$store.state.loading) {
@@ -138,7 +161,7 @@ export default {
             if (this.$route.name == 'catalogo') {
                 const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-                if (scrollTop + clientHeight >= scrollHeight -5) {
+                if (scrollTop + clientHeight >= scrollHeight - 5) {
                     this.loadPokemons();
                 }
             }
