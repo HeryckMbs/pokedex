@@ -23,7 +23,7 @@
                         item.toLowerCase() }}</div>
             </div>
 
-            <button class=" " @click="filterPokemon()">Pesquisar</button>
+            <button class=" primary-button" @click="filterPokemon()">Pesquisar</button>
 
         </div>
     </Transition>
@@ -33,10 +33,19 @@
         </PokemonCard>
 
     </div>
-    <button @click="loadPokemons();">Mostrar filtros</button>
+    <div class="morePokemons" >
+        <button style="margin: 0 auto" class="primary-button" @click="loadPokemons();">Carregar mais Pokemons</button>
+    </div>
 </template>
 
 <style scoped>
+
+.morePokemons{
+    width: 100%; display: flex;
+}
+.morePokemons button
+
+
 .showFilters{
     margin: 0 2%;
 
@@ -58,7 +67,7 @@
     opacity: 0.8;
 }
 
-.filtros button {
+.primary-button {
     padding: 1% 2%;
   
   background-color: red;
