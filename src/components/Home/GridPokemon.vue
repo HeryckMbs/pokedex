@@ -1,56 +1,81 @@
 <template>
-    <div class="filtros">
-        <div class="filterBox">
-           <h1>Pesquisa</h1>
-            <input @change="filterPokemon()" type="text" name="" class="filterField" v-model="pesquisa" id="">
+    <button @click="showFilters = !showFilters">Mostrar filtros</button>
+    <Transition>
 
+        <div v-if="showFilters" class="filtros">
+            <div class="filterBox">
+                <h1>Pesquisa</h1>
+                <input type="text" name="" class="filterField" v-model="pesquisa" id="">
+            </div>
+            <div class=" gridTypes">
+                <div :class="['badge', item, 'typeFilter']" @click="selectTypeFilter($event, item)"
+                    v-for="(item, idx) in types">
+                    {{
+                        item.toLowerCase() }}</div>
+            </div>
+            <button class="button-acess " @click="filterPokemon()">Pesquisar</button>
         </div>
-        <div class=" gridTypes">
-            <div :class="['badge', item, 'typeFilter']" @click="selectTypeFilter($event, item)" v-for="(item, idx) in types">
-                {{
-                    item.toLowerCase() }}</div>
-        </div>
-    </div>
+    </Transition>
     <div class="grid">
 
         <PokemonCard class="item" :pokemon="pokemon" v-for="pokemon in pokemon_filtrados" :key="pokemon.id">
         </PokemonCard>
+
     </div>
+    <button @click="loadPokemons();">Mostrar filtros</button>
+
 </template>
 
 <style scoped>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+
 .typeFilter {
     opacity: 0.8;
 }
-.filterBox{
+
+button {
+    width: 10%;
+}
+
+.filterBox {
     margin: 2% 0;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
-.filterField{
+
+.filterField {
     width: 100%;
     margin-top: 10px;
     padding: 0.5%;
     border-radius: 10px;
     border: 0;
 }
-h1{
+
+h1 {
     margin: 0 !important;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr ));  
-      margin-bottom: 25%;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
 .gridTypes {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr ));  
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 10px;
-    
+
 
 }
 
@@ -75,6 +100,7 @@ export default {
             pesquisa: '',
             types: [],
             typesSelecteds: [],
+            showFilters: false
         }
     },
     methods: {
@@ -90,42 +116,28 @@ export default {
                 event.srcElement.style.opacity = '0.8'
 
             }
-            if (this.typesSelecteds.length == 0) {
-                this.filterPokemon()
-            } else {
-                this.pokemon_filtrados = this.pokemon_filtrados.filter((element) => {
-                    let typePokemons = [];
-                    for (var type of element.types) {
-                        typePokemons.push(type.type.name)
-                    }
-                    const contains = typePokemons.some(element => {
-                        return this.typesSelecteds.includes(element);
-                    });
-                    return contains
-                })
-            }
-
 
 
         },
         filterPokemon() {
             console.log('oi')
-            if (this.pesquisa == '') {
+            if (this.pesquisa == '' && this.typesSelecteds.length == 0) {
                 this.pokemon_filtrados = this.$store.state.pokemons_carregados;
             } else {
-                this.pokemon_filtrados = this.pokemon_filtrados.filter((element) => element.name.includes(this.pesquisa.toLowerCase()))
-            }
-            if (this.typesSelecteds.length != 0) {
-                this.pokemon_filtrados = this.pokemon_filtrados.filter((element) => {
-                    let typePokemons = [];
-                    for (var type of element.types) {
-                        typePokemons.push(type.type.name)
+                this.pokemon_filtrados = this.$store.state.pokemons_carregados.filter((element) => {
+                    console.log(element)
+                    if (this.typesSelecteds.length == 0) {
+                        return true
+                    } else {
+                        for (var type of element.types) {
+                            if (this.typesSelecteds.includes(type.type.name)) {
+                                return true
+                            }
+                        }
+                        return false;
                     }
-                    const contains = typePokemons.some(element => {
-                        return this.typesSelecteds.includes(element);
-                    });
-                    return contains
-                })
+
+                }).filter((element) => this.pesquisa != '' ? element.name.includes(this.pesquisa.toLowerCase()) : true)
             }
             console.log('cabo')
         },
@@ -157,16 +169,16 @@ export default {
         }
     },
     mounted() {
-        window.addEventListener('scroll', () => {
-            if (this.$route.name == 'catalogo') {
-                const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+        // window.addEventListener('scroll', () => {
+        //     if (this.$route.name == 'catalogo') {
+        //         const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-                if (scrollTop + clientHeight >= scrollHeight - 5) {
-                    this.loadPokemons();
-                }
-            }
+        //         if (scrollTop + clientHeight >= scrollHeight - 5) {
+        //             this.
+        //         }
+        //     }
 
-        });
+        // });
 
     },
     beforeMount() {

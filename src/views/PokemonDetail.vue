@@ -340,6 +340,8 @@ li p {
 .doubleDamage {
     display: grid;
     grid-template-areas: 'item item';
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr ));  
+
     gap: 5%;
     padding: 5%;
     width: 100%;

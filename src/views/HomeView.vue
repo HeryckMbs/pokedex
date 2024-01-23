@@ -35,6 +35,8 @@ export default {
   border: none;
   border-radius: 10px;
   color: white;
+  display: flex;
+  justify-content: center;
   font-weight: bolder;
   box-shadow: 0 7px 15px rgba(255, 255, 255, 0.2);
 
