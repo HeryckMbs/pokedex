@@ -19,10 +19,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           git config --global credential.helper store
-          
           git config --global user.email $email
           git config --global user.name $username
-          gh repo clone HeryckMbs/pokedex
+          git clone https://github.com/HeryckMbs/pokedex.git
       - name: deploy to gh-pages
         run: |
           npm i
