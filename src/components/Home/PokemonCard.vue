@@ -29,8 +29,8 @@ export default {
         async goToPokemonDetails(event, pokemon) {
             this.$store.commit('setLoading')
             await this.$store.commit('setPokemon', pokemon)
-
-            await this.$router.push({ path: '/pokemon/' + pokemon.id }).then(() => this.$router.go())
+//.then(() => this.$router.go())
+            await this.$router.push({ path: '/pokemon/' + pokemon.id })
             this.$store.commit('unsetLoading')
 
         }
