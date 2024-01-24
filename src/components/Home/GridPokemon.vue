@@ -71,19 +71,8 @@
     font-size: 3vh;
 }
 
-.primary-button {
-    padding: 1% 2%;
-  
-  background-color: red;
-  margin: 3% 0;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  font-weight: bolder;
-  
-}
+
+
 
 .order {
     display: flex;

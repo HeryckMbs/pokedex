@@ -1,50 +1,55 @@
 <template>
     <div class="presentation">
-            <h2>#{{ pokemon.id }}</h2>
-            <h1>{{ transformaCamelCase(pokemon.name) }}</h1>
-            <div style="display: flex; justify-content: center;">
-                <h6 class="">{{ generaPokemon }}</h6>
-            </div>
-            <div class="image">
+        <h2>#{{ pokemon.id }}</h2>
+        <h1>{{ transformaCamelCase(pokemon.name) }}</h1>
+        <div style="display: flex; justify-content: center;">
+            <h6 class="">{{ generaPokemon }}</h6>
+        </div>
+        <div class="image">
 
-                <img v-if="pokemon.sprites != undefined" :src="pokemon.sprites.other['official-artwork'].front_default"
-                    alt="">
-
-            </div>
-
-            <div class="typeList">
-                <div :class="['badge', item.type.name]" :key="idx" v-for="(item, idx) in pokemon.types">
-                    <img :src="`/src/assets/icons/${item.type.name}.png`" alt="">
-                    <p> {{ transformaCamelCase(item.type.name) }}</p>
-                </div>
-                <div class="badge water" v-if="detalhesEspecie.is_baby">
-                    <p>Baby</p>
-                </div>
-                <div class="badge dark" v-if="detalhesEspecie.is_legendary">
-                    <p>Legendary</p>
-                </div>
-                <div class="badge dark" v-if="detalhesEspecie.is_mythical">
-                    <p>Mythical</p>
-                </div>
-            </div>
-
-            <p v-if="Object.keys(detalhesEspecie).length > 0 && detalhesEspecie.habitat != undefined"><b>Habitat</b> {{
-                transformaCamelCase(detalhesEspecie.habitat.name) }} </p>
-
-            <p><strong>Height:</strong> {{ pokemon.height / 10 }} m</p>
-            <p><b>Weight:</b> {{ pokemon.weight / 10 }} Kg</p>
-            <p>Male: {{ getGender.male }}%</p>
-            <p>Female: {{ getGender.female }}%</p>
+            <img v-if="pokemon.sprites != undefined" :src="pokemon.sprites.other['official-artwork'].front_default" alt="">
 
         </div>
+
+        <div class="typeList">
+            <div :class="['badge', item.type.name]" :key="idx" v-for="(item, idx) in pokemon.types">
+                <img :src="`/src/assets/icons/${item.type.name}.png`" alt="">
+                <p> {{ transformaCamelCase(item.type.name) }}</p>
+            </div>
+            <div class="badge water" v-if="detalhesEspecie.is_baby">
+                <p>Baby</p>
+            </div>
+            <div class="badge dark" v-if="detalhesEspecie.is_legendary">
+                <p>Legendary</p>
+            </div>
+            <div class="badge dark" v-if="detalhesEspecie.is_mythical">
+                <p>Mythical</p>
+            </div>
+        </div>
+
+        <p v-if="Object.keys(detalhesEspecie).length > 0 && detalhesEspecie.habitat != undefined"><b>Habitat</b> {{
+            transformaCamelCase(detalhesEspecie.habitat.name) }} </p>
+
+        <p><strong>Height:</strong> {{ pokemon.height / 10 }} m</p>
+        <p><b>Weight:</b> {{ pokemon.weight / 10 }} Kg</p>
+        <p>Male: {{ getGender.male }}%</p>
+        <p>Female: {{ getGender.female }}%</p>
+
+        <button @click="savePokemon()" class="primary-button favorito">Favoritar</button>
+    </div>
 </template>
 
 <style >
+
+.favorito{
+    padding: 10px;
+}
 
 .badge img {
     width: 15% !important;
     /* background-color: transparent; */
 }
+
 .image {
     margin-top: 10%;
     display: flex;
@@ -68,18 +73,21 @@
     justify-content: space-around;
     align-items: center;
 }
+
 .typeList {
 
-margin-top: 9%;
-display: flex;
-justify-content: space-around;
-padding: 0 8%;
-gap: 10%;
+    margin-top: 9%;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 8%;
+    gap: 10%;
 }
+
 .presentation .badge {
     max-width: 50% !important;
 
 }
+
 .presentation {
     width: 20%;
     display: flex;
@@ -92,13 +100,15 @@ gap: 10%;
 }
 </style>
 <script>
-export default{
-    props:{
-        detalhesEspecie:Object,
-        pokemon:Object,
+import { useStorage } from '@vueuse/core'
+
+export default {
+    props: {
+        detalhesEspecie: Object,
+        pokemon: Object,
     },
     computed: {
-     
+
         generaPokemon() {
             if (this.detalhesEspecie.genera) {
                 let genera = this.detalhesEspecie.genera.filter((element) => element.language.name == 'en')[0].genus
@@ -133,7 +143,13 @@ export default{
         },
     },
     methods: {
+        savePokemon(){
+            
+            
+            const state = useStorage('my-store', )
+            console.log(JSON.parse(state.value))
 
+        },
         transformaCamelCase(inputString) {
             if (inputString != undefined) {
                 // Dividir a string em palavras usando o caractere "-"
