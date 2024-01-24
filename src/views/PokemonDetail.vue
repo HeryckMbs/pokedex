@@ -5,7 +5,8 @@
     </div>
     <PresentationComponent :pokemon="pokemon" :detalhesEspecie="detalhesEspecie" :strongAgainst="strongAgainst"
         :weakAgainst="weakAgainst"></PresentationComponent>
-    <EvolutionComponent v-if="linhasEvolucao && arvoreEvolucao" :linhasEvolucao="linhasEvolucao" :arvoreEvolucao="arvoreEvolucao" />
+    <EvolutionComponent v-if="linhasEvolucao && arvoreEvolucao" :linhasEvolucao="linhasEvolucao"
+        :arvoreEvolucao="arvoreEvolucao" />
     <GaleryComponent :images="pokemon['sprites']"></GaleryComponent>
 </template>
 
@@ -161,19 +162,15 @@ export default {
 
         }
     },
-    created() {
-        console.log('s')
-        if (Object.keys(this.$store.state.pokemon_selecionado).length > 0) {
-            this.pokemon = this.$store.state.pokemon_selecionado
-            this.getSpecieDetail();
-        } else {
-            let id = this.$route.params.id;
-            Api.callApi().get(`/pokemon/${id}`).then(res => {
-                this.pokemon = res.data
-                this.getSpecieDetail();
+    async created() {
 
-            }).catch(error => { })
-        }
+        let id = this.$route.params.id;
+        await Api.callApi().get(`/pokemon/${id}`).then(res => {
+            this.pokemon = res.data
+            this.getSpecieDetail();
+
+        }).catch(error => { })
+
     }
 }
 </script>
