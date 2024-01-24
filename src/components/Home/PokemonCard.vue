@@ -23,6 +23,7 @@
 import UtilsMixin from '@/mixins/utils'
 export default {
     created() {
+        console.log(this)
     },
     methods:{
         async goToPokemonDetails(event,pokemon) {

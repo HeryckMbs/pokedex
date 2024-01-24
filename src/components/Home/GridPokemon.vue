@@ -47,8 +47,8 @@
 
 
 .showFilters{
-    margin: 0 2%;
-
+    margin: 10%;
+    
 }
 
 

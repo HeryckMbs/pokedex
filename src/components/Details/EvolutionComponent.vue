@@ -1,5 +1,4 @@
 <template>
-    
     <div class="main-container evolucoesContainer">
         <h3>Evolutions</h3>
         <div class="evolucoes">
@@ -27,6 +26,40 @@
             </div>
         </div>
     </div>
-
-
 </template>
+
+<style>
+.evolucao-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.evolucoesContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 3% !important;
+    align-items: center;
+}
+
+.evolucoes {
+    width: 100%;
+    flex-wrap: wrap;
+
+}
+</style>
+
+<script>
+
+import PokemonCard from '../Home/PokemonCard.vue';
+
+export default {
+    components: { PokemonCard },
+    props: {
+        linhasEvolucao: Object,
+        arvoreEvolucao: Object
+    }
+}
+</script>
