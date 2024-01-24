@@ -1,22 +1,22 @@
 <template>
-    <div class="item" @click="goToPokemonDetails($event,pokemon)">
-        
+    <div class="item" @click="goToPokemonDetails($event, pokemon)">
 
-            <img :src="pokemon.sprites.other['official-artwork'].front_default" alt="">
-            <div class="">
-                <div class="content">
-                    <h3>{{ captalizeName(pokemon.name) }}</h3>
-                    <p class="codPokemon">N° {{ zeroEsquerda(pokemon.id) }}</p>
-                </div>
-                <div class="types">
-                    <div v-for="(item, index) in pokemon.types" :key="index" :class="['type', item.type.name]">
-                        {{ captalizeName(item.type.name) }}
-                    </div>
+
+        <img class="artPokemon" :src="pokemon.sprites.other['official-artwork'].front_default" alt="">
+        <div class="">
+            <div class="content">
+                <h3>{{ captalizeName(pokemon.name) }}</h3>
+                <p class="codPokemon">N° {{ zeroEsquerda(pokemon.id) }}</p>
+            </div>
+            <div class="types">
+                <div v-for="(item, index) in pokemon.types" :key="index" :class="['type', item.type.name]">
+                    <img :src="`/src/assets/icons/${item.type.name}.png`" class="iconType" alt="">
+                    <p> {{ captalizeName(item.type.name) }}</p>
                 </div>
             </div>
-            
         </div>
-        
+
+    </div>
 </template>
 
 <script>
@@ -25,16 +25,16 @@ export default {
     created() {
         console.log(this)
     },
-    methods:{
-        async goToPokemonDetails(event,pokemon) {
+    methods: {
+        async goToPokemonDetails(event, pokemon) {
             this.$store.commit('setLoading')
-            await this.$store.commit('setPokemon',pokemon)
-           
-            await this.$router.push({path: '/pokemon/'+pokemon.id}).then(() => this.$router.go())
+            await this.$store.commit('setPokemon', pokemon)
+
+            await this.$router.push({ path: '/pokemon/' + pokemon.id }).then(() => this.$router.go())
             this.$store.commit('unsetLoading')
 
         }
-    },  
+    },
     name: 'PokemonCard',
     props: {
         pokemon: Object
@@ -44,9 +44,10 @@ export default {
 </script>
 
 <style scoped>
-h3{
+h3 {
     color: white;
 }
+
 .item {
     grid-area: 'item';
     display: flex;
@@ -75,31 +76,40 @@ h3{
     -o-transform: translateY(-16px);
     transform: translateY(-16px);
 }
+
 .content {
 
     padding: 5% 0;
 }
-.item a{
+
+.item a {
     display: flex;
     flex-wrap: nowrap;
     height: 100%;
     flex-direction: column;
 }
+
 .types {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
     gap: 10px;
     margin-bottom: 10px
+
 }
 
-
+.iconType{
+    max-width: 30%;
+    margin-right: 10px;
+}
 
 .type {
     margin-right: 5px;
     padding: 4% 8%;
+    max-width: 40%;
     box-shadow: 0 3px 11px rgba(0, 0, 0, 0.8);
     font-size: 100%;
     border-radius: 10px;
+    display: flex; justify-content: space-around;
 }
 
 .link {
@@ -121,14 +131,14 @@ h3{
     font-weight: 100;
     color: white;
     font-size: 0.8vw !important;
-    font-family: 'barcadebrawl' ;
+    font-family: 'barcadebrawl';
 
 }
 
 
-img {
-    max-height:30vh;
-    
+.artPokemon {
+    max-height: 34vh;
+
     border-radius: 10px;
     background: #242424;
 }
@@ -141,5 +151,4 @@ img {
 .content p {
     margin-top: 5px;
     font-size: 15pt;
-}
-</style>
+}</style>

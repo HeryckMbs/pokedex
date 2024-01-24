@@ -55,10 +55,7 @@
                             <p>{{ transformaCamelCase(item.ability.name) }}</p>
                         </li>
                     </ul>
-                    <div :class="[]">
-
-                        <!--  -->
-                    </div>
+      
                 </div>
             </div>
 
@@ -80,8 +77,7 @@
             </div>
 
             <div class="combat">
-                <div class="doubleDamageContainer" style="    margin-right: 5%;
-" v-if="Object.keys(strongAgainst).length > 0">
+                <div class="doubleDamageContainer" style="    margin-right: 5%; " v-if="Object.keys(strongAgainst).length > 0">
                     <h4>Double damage To</h4>
                     <div class="baseContainer doubleDamage">
                         <div :class="[index, 'badge']" :key="index" v-for="(item, index) in strongAgainst">
