@@ -1,8 +1,8 @@
 <template>
-    <div @click="goToPokemonDetails($event,pokemon)">
+    <div class="item" @click="goToPokemonDetails($event,pokemon)">
         
 
-            <img class="artPokemon" :src="pokemon.sprites.other['official-artwork'].front_default" alt="">
+            <img :src="pokemon.sprites.other['official-artwork'].front_default" alt="">
             <div class="">
                 <div class="content">
                     <h3>{{ captalizeName(pokemon.name) }}</h3>
@@ -10,8 +10,7 @@
                 </div>
                 <div class="types">
                     <div v-for="(item, index) in pokemon.types" :key="index" :class="['type', item.type.name]">
-                        <img :src="`/src/assets/icons/${item.type.name}.png`" alt="">
-                        <p>{{ captalizeName(item.type.name) }}</p>
+                        {{ captalizeName(item.type.name) }}
                     </div>
                 </div>
             </div>
@@ -48,10 +47,6 @@ export default {
 h3{
     color: white;
 }
-.artPokemon{
- width: 100%;
-}
-
 .item {
     grid-area: 'item';
     display: flex;
@@ -90,23 +85,22 @@ h3{
     height: 100%;
     flex-direction: column;
 }
-
 .types {
     display: flex;
-}
-.types div {
-    width: 50%;
-    margin-right: 5%;
-}
-
-.type{
-    padding: 4%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px
 }
 
 
+
+.type {
+    margin-right: 5px;
+    padding: 4% 8%;
+    box-shadow: 0 3px 11px rgba(0, 0, 0, 0.8);
+    font-size: 100%;
+    border-radius: 10px;
+}
 
 .link {
     background-color: #121212;
@@ -121,21 +115,19 @@ h3{
 
 }
 
-.type img{
-    width: 15% !important;
 
-}
 .codPokemon {
     font-style: italic;
     font-weight: 100;
     color: white;
-    /* font-size: 0.45vw !important; */
+    font-size: 0.8vw !important;
     font-family: 'barcadebrawl' ;
 
 }
 
 
-.artPokemon  {
+img {
+    max-height:30vh;
     
     border-radius: 10px;
     background: #242424;

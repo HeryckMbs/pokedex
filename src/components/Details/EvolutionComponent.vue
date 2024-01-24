@@ -2,25 +2,22 @@
     <div class="main-container evolucoesContainer">
         <h3>Evolutions</h3>
         <div class="evolucoes">
-            <div class="initial" v-for="(item, key, index) in arvoreEvolucao" :key="index">
-                <div class="">
-                    <PokemonCard style="" class="item" :pokemon="item" :key="item.name">
+            <div class="evolucao-item" v-for="(item, key, index) in arvoreEvolucao" :key="index">
+                    <PokemonCard style="max-width: 30%;" :pokemon="item" :key="item.name">
                     </PokemonCard>
-                </div>
 
-            </div>
-
-            <div class="line">
-                <div v-for="(item, key, index) in linhasEvolucao" :key="index"
-                    style="display: flex;flex-direction: row !important; height: 100%;" class="">
-                    <div class="evolucao-item" v-for="(pokem, index, key) in item">
-                        <h1 v-if="index < item.length">></h1>
-
-
-
-                        <PokemonCard class="item" :pokemon="pokem" :key="pokem.name">
-                        </PokemonCard>
-
+                    <div class="" style="display: flex; flex-direction: column;">
+                        <div v-for="(item, key, index) in linhasEvolucao" :key="index"
+                        style="display: flex;flex-direction: row !important;" class="">
+                        <div class="" style="display: flex ; align-items: center;justify-content: center; flex: 1;" v-for="(pokem, index, key) in item">
+                            
+                            
+                            <h1 v-if="index < item.length">></h1>
+                            
+                            <PokemonCard style="max-width: 100%;"  :pokemon="pokem" :key="pokem.name">
+                            </PokemonCard>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -29,17 +26,12 @@
     </div>
 </template>
 
-<style scoped>
-.initial {
-    width: 20%;
-}
-
-
+<style>
 .evolucao-item {
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    width: 45%;
+    justify-content: center;
+
 }
 
 .evolucoesContainer {
@@ -51,12 +43,8 @@
 }
 
 .evolucoes {
-    width: 100%;
+    width: 80%;
     flex-wrap: wrap;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
 
 }
 </style>
