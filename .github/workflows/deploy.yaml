@@ -16,6 +16,7 @@ jobs:
           email: 'heryckmota@gmail.com'
           username: 'heryckmbs'
           access_token: '${{ secrets.GITHUB_TOKEN }}'
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config --global credential.helper store
           
