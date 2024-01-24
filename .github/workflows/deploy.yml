@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  
+  gh-pages:
+    name: Github Pages
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: bahmutov/npm-install@v1
+    - name: install
+      run: npm install
+    - name: Build
+      run: npm run build
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v2
+      env:
+        PERSONAL_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./dist
+      with:
+        forceOrphan: true
