@@ -11,10 +11,9 @@
                         style="display: flex;flex-direction: row !important;" class="">
                         <div class="" style="display: flex ; align-items: center;justify-content: center; flex: 1;" v-for="(pokem, index, key) in item">
                             
-                            
                             <h1 v-if="index < item.length">></h1>
                             
-                            <PokemonCard style="max-width: 100%;"  :pokemon="pokem" :key="pokem.name">
+                            <PokemonCard style="max-width: 90%;"  :pokemon="pokem" :key="pokem.name">
                             </PokemonCard>
                             
                         </div>

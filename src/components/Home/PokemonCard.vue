@@ -6,12 +6,12 @@
         <div class="">
             <div class="content">
                 <h3>{{ captalizeName(pokemon.name) }}</h3>
-                <p class="codPokemon">N° {{ zeroEsquerda(pokemon.id) }}</p>
+                <h3 class="codPokemon">N° {{ zeroEsquerda(pokemon.id) }}</h3>
             </div>
             <div class="types">
                 <div v-for="(item, index) in pokemon.types" :key="index" :class="['type', item.type.name]">
                     <img :src="`/src/assets/icons/${item.type.name}.png`" class="iconType" alt="">
-                    <p> {{ captalizeName(item.type.name) }}</p>
+                    {{ captalizeName(item.type.name) }}
                 </div>
             </div>
         </div>
@@ -130,8 +130,6 @@ h3 {
     font-style: italic;
     font-weight: 100;
     color: white;
-    font-size: 0.8vw !important;
-    font-family: 'barcadebrawl';
 
 }
 

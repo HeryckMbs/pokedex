@@ -5,8 +5,7 @@
     </div>
     <PresentationComponent :pokemon="pokemon" :detalhesEspecie="detalhesEspecie" :strongAgainst="strongAgainst"
         :weakAgainst="weakAgainst"></PresentationComponent>
-    <EvolutionComponent v-if="linhasEvolucao &&
-        arvoreEvolucao" :linhasEvolucao="linhasEvolucao" :arvoreEvolucao="arvoreEvolucao" />
+    <EvolutionComponent v-if="linhasEvolucao && arvoreEvolucao" :linhasEvolucao="linhasEvolucao" :arvoreEvolucao="arvoreEvolucao" />
     <GaleryComponent :images="pokemon['sprites']"></GaleryComponent>
 </template>
 

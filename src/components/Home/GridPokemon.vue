@@ -17,9 +17,9 @@
                 </select>
             </div>
             <div class=" gridTypes">
-                <div :class="['badge', item, 'typeFilter']" @click="selectTypeFilter($event, item)"
+                <div :class="[item, 'typeFilter']" @click="selectTypeFilter($event, item)"
                     v-for="(item, idx) in types">
-                    {{
+                  {{
                         item.toLowerCase() }}</div>
             </div>
 
@@ -64,7 +64,11 @@
 }
 
 .typeFilter {
-    opacity: 0.8;
+    opacity: 0.5;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    font-size: 3vh;
 }
 
 .primary-button {
@@ -115,12 +119,12 @@ h1 {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .gridTypes {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     gap: 10px;
 
 
