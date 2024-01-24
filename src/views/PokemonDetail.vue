@@ -163,7 +163,7 @@ export default {
         }
     },
     created() {
-
+        console.log('s')
         if (Object.keys(this.$store.state.pokemon_selecionado).length > 0) {
             this.pokemon = this.$store.state.pokemon_selecionado
             this.getSpecieDetail();

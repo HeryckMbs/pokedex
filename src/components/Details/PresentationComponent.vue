@@ -15,16 +15,17 @@
 
             <div class="typeList">
                 <div :class="['badge', item.type.name]" :key="idx" v-for="(item, idx) in pokemon.types">
-                    {{ transformaCamelCase(item.type.name) }}
+                    <img :src="`/src/assets/icons/${item.type.name}.png`" alt="">
+                    <p> {{ transformaCamelCase(item.type.name) }}</p>
                 </div>
-                <div class=" water" v-if="detalhesEspecie.is_baby">
-                    Baby
+                <div class="badge water" v-if="detalhesEspecie.is_baby">
+                    <p>Baby</p>
                 </div>
                 <div class="badge dark" v-if="detalhesEspecie.is_legendary">
-                    Legendary
+                    <p>Legendary</p>
                 </div>
                 <div class="badge dark" v-if="detalhesEspecie.is_mythical">
-                    Baby
+                    <p>Mythical</p>
                 </div>
             </div>
 
@@ -77,11 +78,11 @@
 
                 </div>
             </div>
+
             <div class="combat">
                 <div class="doubleDamageContainer" style="    margin-right: 5%;
 " v-if="Object.keys(strongAgainst).length > 0">
                     <h4>Double damage To</h4>
-
                     <div class="baseContainer doubleDamage">
                         <div :class="[index, 'badge']" :key="index" v-for="(item, index) in strongAgainst">
                             <p> {{ transformaCamelCase(index) }}
@@ -133,7 +134,6 @@
                         </div>
 
                     </div>
-                    <!-- <ProgressBar :value="50"></ProgressBar> -->
 
                 </div>
             </div>
@@ -188,11 +188,17 @@
     width: 60%;
 }
 
+.badge img{
+    width: 15% !important;
+    /* background-color: transparent; */
+}
+
 .typeList {
 
     margin-top: 9%;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    padding: 0 8%;
     gap: 10%;
 }
 
@@ -273,8 +279,7 @@ export default {
     },
     data() {
         return {
-            strongAgainst: {},
-            weakAgainst: {},
+
         }
     },
 
