@@ -2,8 +2,8 @@
     <div class="doubleDamageContainer" v-if="Object.keys(arrayDamage).length > 0">
         <h4>{{ title }}</h4>
         <div class="baseContainer doubleDamage">
-            <div :class="[index, 'badge']" :key="index" v-for="(item, index) in arrayDamage">
-                <p> {{ index }}</p>
+            <div :class="[index, 'badge']" :key="index+item" v-for="(item, index) in arrayDamage">
+                <p> {{ index }} ({{ item }}x)</p>
             </div>
         </div>
     </div>
@@ -14,9 +14,12 @@ export default{
     props:{
         arrayDamage: Object,
         title: String
-    }
+    },
+ 
 }
 </script>
+
+
 
 <style>
 .doubleDamageContainer {
@@ -30,9 +33,9 @@ export default{
     display: grid;
     grid-template-areas: 'item item';
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-
+    overflow: H;
     gap: 5%;
-    padding: 5%;
+    padding:  8% 4% !important;
     width: 100%;
 
 }

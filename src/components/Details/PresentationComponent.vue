@@ -126,6 +126,9 @@ export default {
         }
     },
 
+    created() {
+        console.log(this.weakAgainst)
+    },
     computed: {
         baseStats() {
             if (Object.keys(this.pokemon).length > 0) {
@@ -141,7 +144,7 @@ export default {
                     { label: 'Capture Rate', text: this.detalhesEspecie.capture_rate ?? '-' },
                     { label: 'Color', text: this.detalhesEspecie.color.name ?? '-' },
                     { label: 'Base Experience', text: this.pokemon.base_experience ?? '-' },
-                    
+
                 ]
 
             }
@@ -166,15 +169,12 @@ export default {
 
         transformaCamelCase(inputString) {
             if (inputString != undefined) {
-                // Dividir a string em palavras usando o caractere "-"
                 const palavras = inputString.split('-');
 
-                // Capitalizar a primeira letra de cada palavra
                 const palavrasCapitalizadas = palavras.map(palavra =>
                     palavra.charAt(0).toUpperCase() + palavra.slice(1)
                 );
 
-                // Unir as palavras com um espaço
                 const resultado = palavrasCapitalizadas.join(' ');
 
                 return resultado;

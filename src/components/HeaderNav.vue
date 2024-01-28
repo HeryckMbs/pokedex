@@ -4,6 +4,7 @@
         <div class="nav-items">
             <router-link to="/">Home</router-link>
             <router-link to="/catalogo">Pokedex</router-link>
+            <router-link to="/favoritos">Favoritos</router-link>
 
             
         </div>

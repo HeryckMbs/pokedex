@@ -57,6 +57,7 @@ export default {
     props: {
         linhasEvolucao: Object,
         arvoreEvolucao: Object
-    }
+    },
+
 }
 </script>

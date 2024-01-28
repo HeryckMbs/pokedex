@@ -1,7 +1,7 @@
 <template>
     <div class="presentation">
-        <h2>#{{ pokemon.id }}</h2>
-        <h1>{{ transformaCamelCase(pokemon.name) }}</h1>
+        <h4>#{{ pokemon.id }}</h4>
+        <h3>{{ transformaCamelCase(pokemon.name) }}</h3>
         <div style="display: flex; justify-content: center;">
             <h6 class="">{{ generaPokemon }}</h6>
         </div>
@@ -40,8 +40,7 @@
 </template>
 
 <style >
-
-.favorito{
+.favorito {
     padding: 10px;
 }
 
@@ -143,11 +142,17 @@ export default {
         },
     },
     methods: {
-        savePokemon(){
-            
-            
-            const state = useStorage('my-store', )
-            console.log(JSON.parse(state.value))
+        savePokemon() {
+
+            let pokemonsFavorites = JSON.parse(localStorage.getItem('pokemon_favoritos') ?? '[]')
+            let equal = pokemonsFavorites.filter((element) => element.id == this.pokemon.id);
+
+            if (equal.length == 0) {
+                pokemonsFavorites.push(this.pokemon);
+
+            }
+
+            localStorage.setItem('pokemon_favoritos', JSON.stringify(pokemonsFavorites))
 
         },
         transformaCamelCase(inputString) {

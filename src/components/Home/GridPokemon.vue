@@ -4,7 +4,7 @@
 
         <div v-if="showFilters" class="filtros">
             <div class="filterBox">
-                <h1>Pesquisa</h1>
+                <h4>Pesquisa</h4>
                 <input type="text" name="" class="filterField" v-model="pesquisa" id="">
             </div>
             <div class="order">
@@ -43,12 +43,12 @@
 .morePokemons{
     width: 100%; display: flex;
 }
-.morePokemons button
 
 
 .showFilters{
-    margin: 10%;
-    
+    margin: 0 2% !important;
+    padding: 0 2% !important;
+
 }
 
 
@@ -161,7 +161,6 @@ export default {
 
         },
         orderDecrescente(a, b) {
-            console.log([a<b,a>b])
             if (a > b) {
                 return -1;
             } else if (a < b) {
@@ -180,7 +179,6 @@ export default {
             }
         },
         filterPokemon() {
-            console.log('oi')
             if (this.pesquisa == '' && this.typesSelecteds.length == 0) {
                 this.pokemon_filtrados = this.$store.state.pokemons_carregados;
             } else {
@@ -204,7 +202,6 @@ export default {
         },
 
         orderPokemons() {
-            console.log(this.order)
             if (this.order == 'nomeCrescente') {
                 this.pokemon_filtrados = this.pokemon_filtrados.sort((a, b) => this.orderCrescente(a.name, b.name))
             }
@@ -223,7 +220,7 @@ export default {
                 this.$store.commit('setLoading')
 
 
-                await Api.callApi().get(this.next_url != '' ? this.next_url : '/pokemon').then(response => {
+                await Api.callApi().get(this.next_url != '' ? this.next_url : '/pokemon?limit=300"').then(response => {
                     this.next_url = response.data.next;
                     for (let item of response.data.results) {
                         Api.callApi().get(`/pokemon/${item.name}`).then(res => {
@@ -232,7 +229,6 @@ export default {
 
                         }).catch(error => { })
                     }
-                    this.$store.commit('unsetLoading')
 
                 }).catch(error => {
                     this.$store.commit('unsetLoading')
@@ -272,6 +268,8 @@ export default {
             this.$store.commit('unsetLoading')
 
         })
+        this.$store.commit('unsetLoading')
+
     }
 }
 </script>

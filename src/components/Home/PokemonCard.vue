@@ -5,8 +5,8 @@
         <img class="artPokemon" :src="pokemon.sprites.other['official-artwork'].front_default" alt="">
         <div class="">
             <div class="content">
-                <h3>{{ captalizeName(pokemon.name) }}</h3>
-                <h3 class="codPokemon">N° {{ zeroEsquerda(pokemon.id) }}</h3>
+                <h4>{{ captalizeName(pokemon.name) }}</h4>
+                <h5 class="codPokemon">N° {{ zeroEsquerda(pokemon.id) }}</h5>
             </div>
             <div class="types">
                 <div v-for="(item, index) in pokemon.types" :key="index" :class="['type', item.type.name]">
@@ -22,9 +22,7 @@
 <script>
 import UtilsMixin from '@/mixins/utils'
 export default {
-    created() {
-        console.log(this)
-    },
+
     methods: {
         async goToPokemonDetails(event, pokemon) {
             this.$store.commit('setLoading')
