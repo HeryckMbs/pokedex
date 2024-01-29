@@ -7,7 +7,7 @@
         </div>
         <div class="image">
 
-            <img v-if="pokemon.sprites != undefined" :src="pokemon.sprites.other['official-artwork'].front_default" alt="">
+            <img v-if="pokemon.sprites != undefined" :src="imagePokemon" alt="">
 
         </div>
 
@@ -142,10 +142,20 @@ export default {
 
         generaPokemon() {
             if (this.detalhesEspecie.genera) {
-                let genera = this.detalhesEspecie.genera.filter((element) => element.language.name == 'en')[0].genus
+                let genera = this.detalhesEspecie.genera.find((element) => element.language.name == 'en')? this.detalhesEspecie.genera.find((element) => element.language.name == 'en').genus : ''
                 return genera
             }
             return ''
+        },
+        imagePokemon() {
+            
+            if (this.pokemon.sprites.other['official-artwork'].front_default != null) {
+                return this.pokemon.sprites.other['official-artwork'].front_default
+            }
+            if (this.pokemon.sprites.other['home'].front_default) {
+                return this.pokemon.sprites.other['home'].front_default
+            }
+            return '/src/assets/no-image.png'
         },
         getGender() {
             let genderRate = this.detalhesEspecie.gender_rate;
@@ -169,7 +179,7 @@ export default {
                 case 8:
                     return { 'male': 0, 'female': 100 };
                 default:
-                    return { 'make': 0 };
+                return { 'male': 0, 'female': 0 };
             }
         },
     },

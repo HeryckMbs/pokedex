@@ -32,6 +32,9 @@
         </PokemonCard>
 
     </div>
+    <div v-show="pokemon_filtrados.length == 0" class=" noContent" >
+        <img src="https://http.cat/204" alt="">
+    </div>
     <div class="morePokemons">
         <button style="margin: 0 auto" class="primary-button" @click="loadPokemons();">Carregar mais Pokemons</button>
     </div>
@@ -43,6 +46,11 @@
 </template>
 
 <style scoped>
+.noContent{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
 .material-symbols-outlined {
     color: white;
     font-variation-settings:
@@ -255,6 +263,7 @@ export default {
 
             }
 
+            this.$store.commit('unsetLoading')
 
         }
     },
@@ -267,7 +276,6 @@ export default {
             this.types.push(item.name)
         }
 
-        this.$store.commit('unsetLoading')
 
     }
 }

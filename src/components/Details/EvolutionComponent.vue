@@ -9,7 +9,7 @@
                     <div class="" style="display: flex; flex-direction: column;">
                         <div v-for="(item, key, index) in linhasEvolucao" :key="index"
                         style="display: flex;flex-direction: row !important;" class="">
-                        <div class="" style="display: flex ; align-items: center;justify-content: center; flex: 1;" v-for="(pokem, index, key) in item">
+                        <div class="" style="display: flex ; align-items: center;justify-content: start; flex: 1;" v-for="(pokem, index, key) in item">
                             
                             <h1 v-if="index < item.length">></h1>
                             

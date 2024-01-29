@@ -2,7 +2,7 @@
     <div class="item" @click="goToPokemonDetails($event, pokemon)">
 
 
-        <img class="artPokemon" :src="pokemon.sprites.other['official-artwork'].front_default" alt="">
+        <img class="artPokemon" :src="imagePokemon" alt="">
         <div class="">
             <div class="content">
                 <h4>{{ captalizeName(pokemon.name) }}</h4>
@@ -31,6 +31,18 @@ export default {
                 await this.$router.push({ path: '/pokemon/' + pokemon.id }).then(() => this.$router.go('/pokemon/' + pokemon.id))
 
             }, 10);
+        }
+    },
+    computed: {
+        imagePokemon() {
+            
+            if (this.pokemon.sprites.other['official-artwork'].front_default != null) {
+                return this.pokemon.sprites.other['official-artwork'].front_default
+            }
+            if (this.pokemon.sprites.other['home'].front_default) {
+                return this.pokemon.sprites.other['home'].front_default
+            }
+            return '/src/assets/no-image.png'
         }
     },
     name: 'PokemonCard',

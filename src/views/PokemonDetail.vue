@@ -3,16 +3,27 @@
         <a v-if="$route.params.id > 1" :href="`/pokemon/${parseInt($route.params.id) - 1}`">Previous</a>
         <a :href="`/pokemon/${parseInt($route.params.id) + 1}`">Next</a>
     </div>
-    <PresentationComponent :pokemon="pokemon" :detalhesEspecie="detalhesEspecie" :strongAgainst="strongAgainst"
+
+    <PresentationComponent v-if="pokemon != null"  :pokemon="pokemon" :detalhesEspecie="detalhesEspecie" :strongAgainst="strongAgainst"
         :weakAgainst="weakAgainst"></PresentationComponent>
 
-    <EvolutionComponent :linhasEvolucao="linhasEvolucao" :arvoreEvolucao="arvoreEvolucao" />
+    <EvolutionComponent v-if="pokemon != null"  :linhasEvolucao="linhasEvolucao" :arvoreEvolucao="arvoreEvolucao" />
 
-    <GaleryComponent :images="pokemon['sprites']"></GaleryComponent>
+    <GaleryComponent v-if="pokemon != null"  :images="pokemon['sprites'] "></GaleryComponent>
+    <div class="gatinho">
+        <img class="" src="https://http.cat/404" v-show="pokemon == null || pokemon == undefined" alt="">
+
+    </div>
 </template>
 
 
-<style ></style>
+<style >
+.gatinho{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+</style>
 
 <script>
 import ProgressBar from 'primevue/progressbar';
@@ -39,13 +50,13 @@ export default {
     },
     data() {
         return {
-            linhasEvolucao: {},
-            arvoreEvolucao: {},
-            pokemon: {},
-            evolucao: {},
-            detalhesEspecie: {},
-            strongAgainst: {},
-            weakAgainst: {},
+            linhasEvolucao: null,
+            arvoreEvolucao: null,
+            pokemon: null,
+            evolucao: null,
+            detalhesEspecie: null,
+            strongAgainst: null,
+            weakAgainst: null,
         };
     },
     computed: {
@@ -54,8 +65,8 @@ export default {
     watch: {
         async detalhesEspecie(newValue, oldValue) {
             const evolucao = await getEvolutionChain(this.detalhesEspecie.evolution_chain.url)
-            this.linhasEvolucao = evolucao['linhas']
-            this.arvoreEvolucao = evolucao['arvore']
+            this.linhasEvolucao = evolucao['linhas'] ?? []
+            this.arvoreEvolucao = evolucao['arvore'] ?? []
             this.$store.commit('unsetLoading')
         }
     },
@@ -63,13 +74,15 @@ export default {
 
         let id = this.$route.params.id;
         const data = await getPokemonDetail(id);
-        this.pokemon = data['pokemon']
-        this.evolucao = data['evolucao']
-        this.detalhesEspecie = data['detalhesEspecie']
-        this.weakAgainst = data['weakAgainst']
-        this.strongAgainst = data['strongAgainst']
-        console.log(data['weakAgainst'],this.weakAgainst)
+        if(data != null){
+            this.pokemon = data['pokemon']
+            this.evolucao = data['evolucao']
+            this.detalhesEspecie = data['detalhesEspecie']
+            this.weakAgainst = data['weakAgainst']
+            this.strongAgainst = data['strongAgainst']
+        }
 
+        this.$store.commit('unsetLoading')
 
     }
 

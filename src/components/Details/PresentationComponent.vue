@@ -1,9 +1,10 @@
 <template>
     <div class="main-container">
-        
-        <IndividualInformationComponent :detalhesEspecie="detalhesEspecie" :pokemon="pokemon"></IndividualInformationComponent>
 
-        <div class="infos">
+        <IndividualInformationComponent v-if="pokemon != null" :detalhesEspecie="detalhesEspecie" :pokemon="pokemon">
+        </IndividualInformationComponent>
+
+        <div v-if="pokemon != null" class="infos">
             <div>
                 <h4>About</h4>
                 <div class="baseContainer">
@@ -152,15 +153,15 @@ export default {
             return []
         },
         generaPokemon() {
-            if (this.detalhesEspecie.genera) {
-                let genera = this.detalhesEspecie.genera.filter((element) => element.language.name == 'en')[0].genus
+            if (this.detalhesEspecie != null && this.detalhesEspecie.genera != null) {
+                let genera = this.detalhesEspecie.genera.find((element) => element.language.name == 'en')?.genus ?? ''
                 return genera
             }
             return ''
         },
         descriptionPokemon() {
-            if (this.detalhesEspecie.flavor_text_entries) {
-                let description = this.detalhesEspecie.flavor_text_entries.filter((element) => element.language.name == 'en')[0].flavor_text
+            if (this.detalhesEspecie != null && this.detalhesEspecie.flavor_text_entries != null) {
+                let description = this.detalhesEspecie.flavor_text_entries.find((element) => element.language.name == 'en')?.flavor_text ?? ''
                 return description
             }
             return ''
