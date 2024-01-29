@@ -50,7 +50,7 @@
 
 <script>
 
-import PokemonCard from '../Home/PokemonCard.vue';
+import PokemonCard from '../pokemon/PokemonCard.vue';
 
 export default {
     components: { PokemonCard },

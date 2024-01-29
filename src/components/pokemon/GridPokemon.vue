@@ -8,7 +8,7 @@
                 <input type="text" name="" class="filterField" v-model="pesquisa" id="">
             </div>
             <div class="order">
-                <label for="">Ordenar por</label>
+                <h4 for="">Ordenar por</h4>
                 <select name="" @change="orderPokemons()" v-model="order" id="">
                     <option value="nomeCrescente">Nome - Crescente</option>
                     <option value="nomeDecrescente">Nome - Decrescente</option>
@@ -17,9 +17,8 @@
                 </select>
             </div>
             <div class=" gridTypes">
-                <div :class="[item, 'typeFilter']" @click="selectTypeFilter($event, item)"
-                    v-for="(item, idx) in types">
-                  {{
+                <div :class="[item, 'typeFilter']" @click="selectTypeFilter($event, item)" v-for="(item, idx) in types">
+                    {{
                         item.toLowerCase() }}</div>
             </div>
 
@@ -33,19 +32,47 @@
         </PokemonCard>
 
     </div>
-    <div class="morePokemons" >
+    <div class="morePokemons">
         <button style="margin: 0 auto" class="primary-button" @click="loadPokemons();">Carregar mais Pokemons</button>
     </div>
+    <a href="#nav" id="goSearch" class="">
+        <span class="material-symbols-outlined">
+            arrow_upward
+        </span>
+    </a>
 </template>
 
 <style scoped>
+.material-symbols-outlined {
+    color: white;
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 1000
+}
 
-.morePokemons{
-    width: 100%; display: flex;
+h4 {
+    margin-bottom: 10px !important;
+
+}
+
+#goSearch {
+    cursor: pointer;
+
+    position: fixed;
+    bottom: 4vh;
+    left: 4vw;
+    background-color: red;
+    border-radius: 50%;
+    padding: 20px;
+}
+
+.morePokemons {
+    width: 100%;
+    display: flex;
 }
 
 
-.showFilters{
+.showFilters {
     margin: 0 2% !important;
     padding: 0 2% !important;
 
@@ -69,6 +96,7 @@
     display: flex;
     justify-content: center;
     font-size: 3vh;
+    cursor: pointer;
 }
 
 
@@ -77,7 +105,7 @@
 .order {
     display: flex;
     flex-direction: column;
-    margin: 2% auto;
+    /* margin: 2% auto; */
 }
 
 .order select {
@@ -87,7 +115,7 @@
 }
 
 .filterBox {
-    margin: 2% 0;
+    /* margin: 2% 0; */
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -112,8 +140,9 @@ h1 {
 }
 
 .gridTypes {
+    margin-top: 1%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 10px;
 
 
@@ -125,8 +154,8 @@ h1 {
 </style>
 
 <script >
-import Api from '/src/http/Api.js';
 import PokemonCard from './PokemonCard.vue'
+import { searchPokemons,getTypes } from '@/services/GridService'
 export default {
     components: { PokemonCard },
     created() {
@@ -219,55 +248,25 @@ export default {
             if (!this.$store.state.loading) {
                 this.$store.commit('setLoading')
 
+                const url = this.next_url != '' ? this.next_url : '/pokemon?offset=0&limit=600"';
+                this.next_url = await searchPokemons(url)
 
-                await Api.callApi().get(this.next_url != '' ? this.next_url : '/pokemon?limit=300"').then(response => {
-                    this.next_url = response.data.next;
-                    for (let item of response.data.results) {
-                        Api.callApi().get(`/pokemon/${item.name}`).then(res => {
-                            this.$store.commit('storePokemons', res.data)
-                            this.pokemon_filtrados = this.$store.state.pokemons_carregados;
-
-                        }).catch(error => { })
-                    }
-
-                }).catch(error => {
-                    this.$store.commit('unsetLoading')
-
-                })
-
+                this.pokemon_filtrados = this.$store.state.pokemons_carregados;
 
             }
 
 
         }
     },
-    mounted() {
-        // window.addEventListener('scroll', () => {
-        //     if (this.$route.name == 'catalogo') {
-        //         const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-
-        //         if (scrollTop + clientHeight >= scrollHeight - 5) {
-        //             this.
-        //         }
-        //     }
-
-        // });
-
-    },
-    beforeMount() {
+    async beforeMount() {
         if (this.$store.state.pokemons_carregados.length == 0) {
             this.loadPokemons()
         }
-        Api.callApi().get('/type/').then(response => {
-            for (let item of response.data.results) {
-                this.types.push(item.name)
-            }
-            this.$store.commit('unsetLoading')
+        let typesPokemon = await getTypes();
+        for (let item of typesPokemon) {
+            this.types.push(item.name)
+        }
 
-        }).catch(error => {
-            this.$store.commit('unsetLoading')
-
-        })
         this.$store.commit('unsetLoading')
 
     }

@@ -6,21 +6,31 @@ export default {
   components: {
     HeaderNav
   },
-  created(){
+  created() {
 
+  },
+  computed: {
+    loading() {
+      return this.$store.state.loading
+    }
+  }
+  ,
+  watch: {
+    loading(newValue, oldValue) {
+      console.log(newValue, oldValue)
+    }
   }
 
 }
 </script>
 
 <template>
-  
   <header>
     <HeaderNav />
   </header>
-  <div class="loader" id="loader">
-    <img src="./assets/loading.gif" alt="">
-    <p>Carregando</p>
+  <div v-show="loading" class="loader" id="loader">
+      <img src="./assets/loading.gif" alt="">
+      <p>Carregando</p>
   </div>
 
   <RouterView />
@@ -30,7 +40,7 @@ export default {
 .loader {
 
   position: fixed;
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;

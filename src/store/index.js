@@ -28,10 +28,8 @@ export default createStore({
         },
         setLoading(state){
             state.loading = true;
-            document.getElementById('loader').style.display = 'flex';
         },
         unsetLoading(state){
-            document.getElementById('loader').style.display = 'none';
             state.loading = false;
 
         },

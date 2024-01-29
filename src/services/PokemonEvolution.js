@@ -3,7 +3,7 @@ export default async function getEvolutionChain(url) {
     let result = {}
     console.log(url)
     await Api.callApi().get(url).then(response => {
-      result =   mountChain(response.data.chain)
+      result =  mountChain(response.data.chain)
     }).catch(error => {
     })
     return result

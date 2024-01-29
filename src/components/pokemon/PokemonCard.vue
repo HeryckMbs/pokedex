@@ -6,7 +6,7 @@
         <div class="">
             <div class="content">
                 <h4>{{ captalizeName(pokemon.name) }}</h4>
-                <h5 class="codPokemon">N° {{ zeroEsquerda(pokemon.id) }}</h5>
+                <h5 class="codPokemon">N° {{ pokemon.id }}</h5>
             </div>
             <div class="types">
                 <div v-for="(item, index) in pokemon.types" :key="index" :class="['type', item.type.name]">
@@ -26,11 +26,11 @@ export default {
     methods: {
         async goToPokemonDetails(event, pokemon) {
             this.$store.commit('setLoading')
-            await this.$store.commit('setPokemon', pokemon)
 
-            await this.$router.push({ path: '/pokemon/' + pokemon.id }).then(() => this.$router.go('/pokemon/' + pokemon.id))
-            this.$store.commit('unsetLoading')
+            setTimeout(async () => {
+                await this.$router.push({ path: '/pokemon/' + pokemon.id }).then(() => this.$router.go('/pokemon/' + pokemon.id))
 
+            }, 10);
         }
     },
     name: 'PokemonCard',
@@ -53,6 +53,7 @@ h3 {
     justify-content: center;
     background-color: #303134;
     margin: 15px;
+    max-width: 16vw !important;
     box-shadow: 0 7px 15px rgba(0, 0, 0, 0.8);
     padding: 15px;
     border-radius: 10px;
@@ -73,6 +74,7 @@ h3 {
     -ms-transform: translateY(-16px);
     -o-transform: translateY(-16px);
     transform: translateY(-16px);
+    cursor: pointer;
 }
 
 .content {
@@ -92,10 +94,9 @@ h3 {
     flex-direction: row;
     gap: 10px;
     margin-bottom: 10px
-
 }
 
-.iconType{
+.iconType {
     max-width: 30%;
     margin-right: 10px;
 }
@@ -107,7 +108,8 @@ h3 {
     box-shadow: 0 3px 11px rgba(0, 0, 0, 0.8);
     font-size: 100%;
     border-radius: 10px;
-    display: flex; justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
 }
 
 .link {
@@ -147,4 +149,5 @@ h3 {
 .content p {
     margin-top: 5px;
     font-size: 15pt;
-}</style>
+}
+</style>

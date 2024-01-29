@@ -26,7 +26,7 @@ export default {
   </main>
 </template>
 
-<style >
+<style scoped>
 .button-acess {
   padding: 2% 4%;
   width: 30%;
@@ -78,10 +78,19 @@ export default {
 }
 
 main {
+
+
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+
+}
+body{
+  background-image: url('@/assets/wallpaper.jpg') ;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 </style>

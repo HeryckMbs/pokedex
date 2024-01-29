@@ -6,26 +6,17 @@
     <PresentationComponent :pokemon="pokemon" :detalhesEspecie="detalhesEspecie" :strongAgainst="strongAgainst"
         :weakAgainst="weakAgainst"></PresentationComponent>
 
-    <EvolutionComponent :linhasEvolucao="linhasEvolucaoComputed" :arvoreEvolucao="arvoreEvolucaoComputed" />
+    <EvolutionComponent :linhasEvolucao="linhasEvolucao" :arvoreEvolucao="arvoreEvolucao" />
+
     <GaleryComponent :images="pokemon['sprites']"></GaleryComponent>
 </template>
 
 
-<style >
-h2,
-h1,
-h4,
-h3,
-h5,
-h6 {
-    color: #ED1E24;
-
-}
-</style>
+<style ></style>
 
 <script>
 import ProgressBar from 'primevue/progressbar';
-import PokemonCard from '@/components/Home/PokemonCard.vue';
+import PokemonCard from '@/components/pokemon/PokemonCard.vue';
 import EvolutionComponent from '@/components/Details/EvolutionComponent.vue';
 import GaleryComponent from '@/components/Details/GaleryComponent.vue'
 import PresentationComponent from '@/components/Details/PresentationComponent.vue';
@@ -41,7 +32,11 @@ export default {
         PresentationComponent,
         PresentationComponent
     },
-
+    beforeCreate() {
+        if (!this.$store.state.loading) {
+            this.$store.commit('setLoading')
+        }
+    },
     data() {
         return {
             linhasEvolucao: {},
@@ -54,31 +49,29 @@ export default {
         };
     },
     computed: {
-        linhasEvolucaoComputed() {
-            return this.linhasEvolucao
-        },
-        arvoreEvolucaoComputed() {
-            return this.arvoreEvolucao
-        },
+
+    },
+    watch: {
+        async detalhesEspecie(newValue, oldValue) {
+            const evolucao = await getEvolutionChain(this.detalhesEspecie.evolution_chain.url)
+            this.linhasEvolucao = evolucao['linhas']
+            this.arvoreEvolucao = evolucao['arvore']
+            this.$store.commit('unsetLoading')
+        }
     },
     async created() {
-        this.$store.commit('setLoading')
 
         let id = this.$route.params.id;
-
         const data = await getPokemonDetail(id);
-        const evolucao = await getEvolutionChain(data['detalhesEspecie'].evolution_chain.url)
-
         this.pokemon = data['pokemon']
         this.evolucao = data['evolucao']
         this.detalhesEspecie = data['detalhesEspecie']
         this.weakAgainst = data['weakAgainst']
         this.strongAgainst = data['strongAgainst']
-        this.linhasEvolucao = evolucao['linhas']
-        this.arvoreEvolucao = evolucao['arvore']
-        this.$store.commit('unsetLoading')
+        console.log(data['weakAgainst'],this.weakAgainst)
 
-    },
+
+    }
 
 }
 </script>

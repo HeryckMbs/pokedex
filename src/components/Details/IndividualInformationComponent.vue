@@ -35,13 +35,22 @@
         <p>Male: {{ getGender.male }}%</p>
         <p>Female: {{ getGender.female }}%</p>
 
-        <button @click="savePokemon()" class="primary-button favorito">Favoritar</button>
+       
+
+        <button @click="savePokemon()" class="primary-button  favorito"> <span id="iconFavorite" class="material-icons material-symbols-outlined  md-red">favorite</span></button>
     </div>
 </template>
 
-<style >
+<style scoped>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+
+}
 .favorito {
     padding: 10px;
+    width: 4vw !important;
+    font-size: 0.8vw !important;
 }
 
 .badge img {
@@ -96,12 +105,35 @@
     background-color: #1A1A1A;
     border-radius: 10px;
     padding: 1%;
+    height: 100%;
+    flex: 1;
+
 }
+
+
+.presentation p {
+    margin-top: 5% !important
+
+}
+
 </style>
 <script>
-import { useStorage } from '@vueuse/core'
 
 export default {
+    data(){
+        return {
+            favorito:false
+        }
+    },
+    watch:{
+        favorito(newValue,oldValue){
+            if(newValue){
+                document.getElementById('iconFavorite').style.fontVariationSettings = "'FILL' 1";
+            }else{
+                document.getElementById('iconFavorite').style.fontVariationSettings = "'FILL' 0";
+            }
+        }
+    },  
     props: {
         detalhesEspecie: Object,
         pokemon: Object,
@@ -149,7 +181,10 @@ export default {
 
             if (equal.length == 0) {
                 pokemonsFavorites.push(this.pokemon);
-
+                this.favorito = true;
+            }else{
+                pokemonsFavorites = pokemonsFavorites.filter((element) => element.id != this.pokemon.id)
+                this.favorito = false
             }
 
             localStorage.setItem('pokemon_favoritos', JSON.stringify(pokemonsFavorites))
@@ -175,6 +210,13 @@ export default {
 
 
 
+    },
+    updated(){
+        const pokemonsFavoritos = JSON.parse(localStorage.getItem('pokemon_favoritos'));
+        this.favorito = pokemonsFavoritos.filter((element) => element.id == this.pokemon.id).length == 1
+        if(this.favorito){
+            document.getElementById('iconFavorite').style.fontVariationSettings = "'FILL' 1";
+        }
     }
 }
 </script>

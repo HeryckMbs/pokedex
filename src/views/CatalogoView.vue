@@ -1,6 +1,6 @@
 <template>
     <div class="containerCatalogo">
-        <h1>Pokedex</h1>
+        <h1 >Pokedex</h1>
         <GridPokemon></GridPokemon>
 
 
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import GridPokemon from '@/components/Home/GridPokemon.vue';
+import GridPokemon from '@/components/pokemon/GridPokemon.vue';
 export default{
     components:{
         GridPokemon

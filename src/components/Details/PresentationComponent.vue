@@ -1,6 +1,7 @@
 <template>
     <div class="main-container">
-        <Presentation :detalhesEspecie="detalhesEspecie" :pokemon="pokemon"></Presentation>
+        
+        <IndividualInformationComponent :detalhesEspecie="detalhesEspecie" :pokemon="pokemon"></IndividualInformationComponent>
 
         <div class="infos">
             <div>
@@ -10,7 +11,7 @@
                 </div>
             </div>
             <div>
-                <h4>Habilities</h4>
+                <h4>Abilities</h4>
                 <div class="baseContainer">
                     <ul class="habilities">
                         <li :key="index" v-for="(item, index) in pokemon.abilities">
@@ -107,12 +108,12 @@ li p {
 <script>
 import GridDamage from './GridDamage.vue'
 import RowList from './RowList.vue'
-import Presentation from './Presentation.vue'
+import IndividualInformationComponent from './IndividualInformationComponent.vue'
 export default {
     components: {
         GridDamage,
         RowList,
-        Presentation
+        IndividualInformationComponent
     },
     props: {
         pokemon: Object,

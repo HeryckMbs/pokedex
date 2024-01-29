@@ -23,7 +23,7 @@ h1{
 }
 </style>
 <script>
-import PokemonCard from '@/components/Home/PokemonCard.vue';
+import PokemonCard from '@/components/pokemon/PokemonCard.vue';
 export default {
     components: { PokemonCard },
     data() {

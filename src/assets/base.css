@@ -99,7 +99,7 @@ h4 { font-size: 1vw; }
 h5 { font-size: 0.8vw; }
 h6 { font-size: 0.6vw; }
 
-p{
+p,a{
   font-size: 1.5vw!important;
   color: white;
 }
@@ -122,7 +122,7 @@ p{
 
 .primary-button {
   padding: 1% 2%;
-
+cursor: pointer;
 background-color: red;
 margin: 3% 0;
 border: none;
@@ -131,4 +131,14 @@ color: white;
 display: flex;
 justify-content: center;
 font-weight: bolder;
+}
+
+h2,
+h1,
+h4,
+h3,
+h5,
+h6 {
+    color: #ED1E24;
+
 }

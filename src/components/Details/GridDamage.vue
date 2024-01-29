@@ -31,12 +31,22 @@ export default{
 
 .doubleDamage {
     display: grid;
-    grid-template-areas: 'item item';
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    overflow: H;
-    gap: 5%;
+    /* flex-wrap: wrap; */
+    grid-template-areas: 'item item ' ;
+    /* 
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); */
+ 
+    
     padding:  8% 4% !important;
-    width: 100%;
 
+}
+.doubleDamage .badge{
+    width: 8vw;
+    margin: 10px;
+    max-width: 10vw;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 3%;
 }
 </style>
